@@ -1,0 +1,22 @@
+{
+    "name": "Woofer",
+    "version": "1.0.0",
+    "main": "index.js",
+    "scripts": {
+        "dev:frontend": "npm start --prefix packages/frontend",
+        "dev:backend": "npm start --prefix packages/backend",
+        "dev": "concurrently \"npm run dev:backend\" \"npm run dev:frontend\"",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "author": "Shallot Sniffers",
+    "license": "ISC",
+    "description": "",
+    "devDependencies": {
+        "nodemon": "^3.1.9"
+    },
+    "dependencies": {
+        "cors": "^2.8.5",
+        "express": "^5.1.0",
+        "mongoose": "^8.14.0"
+    }
+}

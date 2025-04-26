@@ -1,0 +1,45 @@
+.home-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    background: #F6D8C0;
+    font-family: 'Fredoka', sans-serif;
+  }
+  
+  .title {
+    font-size: 4rem;
+    color: #6C4F4B;
+    margin-bottom: 0.5rem;
+  }
+  
+  .subtitle {
+    font-size: 1.5rem;
+    color: #6C4F4B;
+    margin-bottom: 2rem;
+  }
+  
+  .home-button {
+    background-color: #A97E70;
+    font-family: 'Fredoka', sans-serif;
+    color: white;
+    border: none;
+    padding: 1rem 2rem;
+    font-size: 1rem;
+    border-radius: 500px;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+  }
+  
+  .home-button:hover {
+    background-color: #6C4F4B;
+    color: white;
+  }
+
+  .dog-image {
+    width: 350px;
+    height: 400px;
+  }
+  
+  
