@@ -35,7 +35,7 @@ function Home() {
       <button className="home-button">Woof Woof</button>
   
       <div style={{ paddingTop: "2rem" }}>
-        <h2>Add Your Dog 🐾</h2>
+        <h2>Add Your Dog</h2>
         <Form handleSubmit={handleSubmit} />
   
         <h2>Meet a New Furry Friend:</h2>
