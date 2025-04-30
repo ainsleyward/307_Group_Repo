@@ -8,6 +8,6 @@ const dogSchema = new mongoose.Schema({
   image: String, // image URL
 });
 
-const Dog = mongoose.model("Dog", dogSchema);
+const Dog = mongoose.model("Dog", dogSchema, "Dogs");
 
 export default Dog;
