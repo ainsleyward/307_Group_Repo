@@ -2,12 +2,23 @@
 
 set -e
 
+# navigate to backend and install
 echo "Setting up backend..."
 cd packages/backend
 npm init -y
 npm install express mongoose cors dotenv
 
-echo "Setting up frontend..."
+# navigate to frontend and install
+echo "Setting up frontend..."./
 cd ..
 cd frontend
 npm install
+npm audit fix # automatically audit
+
+cd ../.. # go back to root
+
+# ensure .env exists and overwrite with temporary env file
+touch ./packages/backend/.env
+chmod 777 ./packages/backend/.env
+echo "MONGO_URI=mongodb+srv://katieslobodsky:o1RUwQ0J0A49q0tI@woofer.iju6doq.mongodb.net/Woofer
+PORT=8000" > ./packages/backend/.env
