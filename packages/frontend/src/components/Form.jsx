@@ -1,5 +1,8 @@
 // src/Form.jsx
-import React, { useState } from "react";
+// upload to cloudinary using URL from previewURL, then get URL from cloudinary and 
+// send that to the 
+import React, { useState, useEffect, useRef } from "react";
+import { Cloudinary } from '@cloudinary/url-gen';
 
 function Form(props) {
   const [dog, setDog] = useState({
@@ -10,6 +13,19 @@ function Form(props) {
     bio: ""
   });
 
+  const cld = new Cloudinary({ cloud: { cloudName: 'dbmpxjsz1' } });
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [previewUrl, setPreviewUrl] = useState(null);
+  const [publicId, setPublicId] = useState(null);
+  const fileInputRef = useRef(null);
+
+  // Trigger upload when selectedFile changes
+  useEffect(() => {
+    if (selectedFile) {
+      uploadToCloudinary();
+    }
+  }, [selectedFile]);
+
   function handleChange(event) {
     const { name, value } = event.target;
     setDog((prevDog) => ({
@@ -18,10 +34,59 @@ function Form(props) {
     }));
   }
 
+  const handleFileSelect = (e) => {
+    const file = e.target.files[0];
+    if(!file)
+    {
+      console.log("No file selected");
+      return;
+    }
+
+    setSelectedFile(file);
+    setPreviewUrl(URL.createObjectURL(file));
+  };
+
+  const uploadToCloudinary = async () => {
+    try {
+      // add metadata for Cloudinary API
+      const formData = new FormData();
+      formData.append('file', selectedFile);
+      formData.append('upload_preset', 'woofer_preset_dogs'); // enforced in non-key'd transactions
+
+      const response = await fetch(
+        `https://api.cloudinary.com/v1_1/dbmpxjsz1/image/upload`,
+        { method: 'POST', body: formData }
+      );
+      
+      if (!response.ok) throw new Error('Upload failed');
+      
+      const data = await response.json();
+      console.log('Uploaded URL:', data.secure_url);
+      setPublicId(data.public_id);
+      console.log(data);
+      setDog(prev => ({ ...prev, image: data.secure_url })); // Update dog.image
+    } catch (error) {
+      console.error('Upload error:', error);
+    }
+  };
+
   function submitForm() {
     props.handleSubmit(dog);
-    setDog({ name: "", image: "", age: "", breed: "", bio: "" });
+    resetForm();
   }
+  
+  function resetForm() {
+    setDog({ name: "", image: "", age: "", breed: "", bio: "" });
+
+    setSelectedFile(null);
+    setPreviewUrl(null);
+    setPublicId(null);
+    
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
+    }
+  }
+
 
   return (
     <form>
@@ -36,12 +101,20 @@ function Form(props) {
 
       <label htmlFor="image">Image</label>
       <input
-        type="text"
-        name="image"
+        type="file" 
+        accept="image/*"
         id="image"
-        value={dog.image}
-        onChange={handleChange}
+        ref={fileInputRef}
+        onChange={handleFileSelect}
       />
+
+      {previewUrl && (
+        <img
+          src={previewUrl}
+          alt="Preview"
+          style={{ width: '200px', margin: '10px 0' }}
+        />
+      )}
 
       <label htmlFor="age">Age</label>
       <input
