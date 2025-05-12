@@ -47,28 +47,23 @@ function Form(props) {
   };
 
   const uploadToCloudinary = async () => {
-    try {
-      // add metadata for Cloudinary API
-      const formData = new FormData();
-      formData.append('file', selectedFile);
-      formData.append('upload_preset', 'woofer_preset_dogs'); // enforced in non-key'd transactions
+    // add metadata for Cloudinary API
+    const formData = new FormData();
+    formData.append('file', selectedFile);
+    formData.append('upload_preset', 'woofer_preset_dogs'); // enforced in non-key'd transactions
 
-      const response = await fetch(
-        `https://api.cloudinary.com/v1_1/dbmpxjsz1/image/upload`,
-        { method: 'POST', body: formData }
-      );
-      
-      if (!response.ok) throw new Error('Upload failed');
-      
-      const data = await response.json();
-      console.log('Uploaded URL:', data.secure_url);
+    fetch(
+      `https://api.cloudinary.com/v1_1/dbmpxjsz1/image/upload`,
+      { method: 'POST', body: formData }
+    )
+    .then((res) => res.json())
+    .then((data) => {
       setPublicId(data.public_id);
-      console.log(data);
       setDog(prev => ({ ...prev, image: data.secure_url })); // Update dog.image
-    } catch (error) {
-      console.error('Upload error:', error);
-    }
-  };
+      console.log(data);
+    })
+    .catch((error) => console.error(error))
+  }
 
   function submitForm() {
     props.handleSubmit(dog);
