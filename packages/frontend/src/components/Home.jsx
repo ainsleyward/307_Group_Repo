@@ -1,7 +1,7 @@
 // src/Home.jsx
 import React, { useState, useEffect } from "react";
 import "../styles/Home.css";
-import Form from "./Form";
+import Form from "./CreateDogProfile";
 
 function Home() {
   const [dogs, setDogs] = useState([]);

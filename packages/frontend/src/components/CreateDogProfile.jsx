@@ -1,7 +1,7 @@
-// src/Form.jsx
+// src/CreateDogProfile.jsx
 import React, { useState } from "react";
 
-function Form(props) {
+function CreateDogProfile(props) {
   const [dog, setDog] = useState({
     name: "",
     image: "",
@@ -79,4 +79,4 @@ function Form(props) {
   );
 }
 
-export default Form;
+export default CreateDogProfile;
