@@ -19,5 +19,8 @@ npm audit fix # automatically audit
 cd ../.. # go back to root
 
 # ensure .env exists and overwrite with temporary env file
-echo "MONGO_URI=mongodb+srv://katieslobodsky:o1RUwQ0J0A49q0tI@woofer.iju6doq.mongodb.net/Woofer
-PORT=8000" > ./packages/backend/.env
+my_path=./packages/backend/
+echo ""
+echo "#######################################################################"
+echo "Please make the file .env in $my_path containing the secrets"
+echo "#######################################################################"
