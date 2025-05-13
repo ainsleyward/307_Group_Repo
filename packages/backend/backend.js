@@ -3,6 +3,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
 import Dog from "./models/Dog.js";
+import dashboardRoutes from "./routes/dashboard.js";
 
 dotenv.config();
 
@@ -22,6 +23,8 @@ app.use(express.json());
 app.get("/", (req, res) => {
     res.send("Hello World!");
 });
+
+app.use("/dashboard", dashboardRoutes);
 
 // GET dogs
 app.get("/dogs", (req, res) => {

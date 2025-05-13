@@ -4,7 +4,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Cloudinary } from '@cloudinary/url-gen';
 
-function Form(props) {
+function CreateDogProfile(props) {
   const [dog, setDog] = useState({
     name: "",
     image: "",
@@ -147,4 +147,4 @@ function Form(props) {
   );
 }
 
-export default Form;
+export default CreateDogProfile;
