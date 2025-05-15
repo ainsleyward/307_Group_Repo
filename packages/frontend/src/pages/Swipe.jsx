@@ -1,4 +1,4 @@
-// src/Swipe.jsx
+// src/pages/Swipe.jsx
 import React, { useState, useEffect } from "react";
 import "../styles/Home.css";
 import { useParams } from "react-router-dom";

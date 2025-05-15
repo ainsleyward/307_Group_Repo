@@ -1,4 +1,4 @@
-// src/App.jsx
+// src/pages/App.jsx
 import React from "react";
 import Home from "./Home";
 import Dashboard from "./Dashboard";

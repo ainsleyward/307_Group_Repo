@@ -1,4 +1,4 @@
-// src/Form.jsx
+// src/pages/Form.jsx
 // upload to cloudinary using URL from previewURL, then get URL from cloudinary and 
 // send that to the 
 import React, { useState, useEffect, useRef } from "react";

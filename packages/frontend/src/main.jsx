@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOMClient from "react-dom/client";
-import App from "./components/App";
+import App from "./pages/App";
 
 // Create the container
 const container = document.getElementById("root");
