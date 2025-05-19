@@ -3,6 +3,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
 import Dog from "./models/Dog.js";
+import Match from "./models/Match.js";
 import dashboardRoutes from "./routes/dashboard.js";
 
 dotenv.config();
@@ -39,6 +40,22 @@ app.post("/dogs", (req, res) => {
     newDog.save()
       .then((dog) => res.status(201).json(dog))
       .catch((err) => res.status(400).send(err.message)); //client-side error
+});
+
+app.post("/matches", (req, res) => {
+  const newMatch = new Match(req.body);
+  newMatch.save()
+    .then((match) => res.status(201).json(match))
+    .catch((err) => res.status(400).send(err.message));
+});
+
+app.delete("/dev/clear-matches", async (req, res) => {
+  try {
+    await Match.deleteMany({});
+    res.send("All matches deleted");
+  } catch (err) {
+    res.status(500).send("Error deleting matches");
+  }
 });
 
 app.listen(port, () => {

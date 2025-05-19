@@ -20,13 +20,35 @@
     font-size: 50px;
   }
 
-  .three-columns-grid {
-    display: grid;
-    grid-auto-rows: 1fr;
-    grid-template-columns: 1fr 1fr 1fr;
-  }
+.three-columns-grid {
+  display: grid;
+  grid-auto-rows: 1fr;
+  grid-template-columns: 1fr 1fr 1fr;
+}
 
-/* columns */
-  .three-columns-grid > * {
-    padding:1rem;
-  }
+.three-columns-grid > * {
+  padding:1rem;
+}
+
+.button-column {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.icon-button {
+  background: none;         /* remove default button background */
+  border: none;             /* remove border */
+  padding: 0;               /* remove spacing around icon */
+  border-radius: 50%;       /* make the button circular */
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon-button svg {
+  width: 175px;
+  height: 175px;
+  display: block;
+}

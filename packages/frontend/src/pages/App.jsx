@@ -11,7 +11,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/dashboard/:userId" element={<Dashboard />} />
-        <Route path="/swipe" element={<Swipe />} />
+        <Route path="/swipe/:dogId" element={<Swipe />} />
       </Routes>
     </Router>
   );
