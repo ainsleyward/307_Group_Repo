@@ -1,3 +1,5 @@
+// need to update routes. Make one for dogs separately, and use new config of cloudinary and already existing post /dog
+// to upload image. NEED TO CHANGE DOG IMAGE SCHEMA TO INCLUDE PUBLIC ID.
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
@@ -41,6 +43,8 @@ app.post("/dogs", (req, res) => {
       .then((dog) => res.status(201).json(dog))
       .catch((err) => res.status(400).send(err.message)); //client-side error
 });
+
+
 
 app.post("/matches", (req, res) => {
   const newMatch = new Match(req.body);

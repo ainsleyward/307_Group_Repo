@@ -18,6 +18,8 @@
         "cors": "^2.8.5",
         "express": "^5.1.0",
         "mongoose": "^8.14.0",
+        "multer": "^2.0.0",
+        "multer-storage-cloudinary": "^4.0.0",
         "react-router-dom": "^7.6.0"
     }
 }
