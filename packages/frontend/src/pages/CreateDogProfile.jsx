@@ -2,7 +2,6 @@
 // upload to cloudinary using URL from previewURL, then get URL from cloudinary and 
 // send that to the 
 import React, { useState, useEffect, useRef } from "react";
-import { Cloudinary } from '@cloudinary/url-gen';
 
 function CreateDogProfile(props) {
   const [dog, setDog] = useState({
@@ -13,18 +12,10 @@ function CreateDogProfile(props) {
     bio: ""
   });
 
-  const cld = new Cloudinary({ cloud: { cloudName: 'dbmpxjsz1' } });
   const [selectedFile, setSelectedFile] = useState(null);
   const [previewUrl, setPreviewUrl] = useState(null);
-  const [publicId, setPublicId] = useState(null);
   const fileInputRef = useRef(null);
 
-  // Trigger upload when selectedFile changes
-  useEffect(() => {
-    if (selectedFile) {
-      uploadToCloudinary();
-    }
-  }, [selectedFile]);
 
   function handleChange(event) {
     const { name, value } = event.target;
@@ -46,36 +37,41 @@ function CreateDogProfile(props) {
     setPreviewUrl(URL.createObjectURL(file));
   };
 
-  const uploadToCloudinary = async () => {
-    // add metadata for Cloudinary API
-    const formData = new FormData();
-    formData.append('file', selectedFile);
-    formData.append('upload_preset', 'woofer_preset_dogs'); // enforced in non-key'd transactions
+  const submitForm = async (e) => {
+    e.preventDefault();
 
-    fetch(
-      `https://api.cloudinary.com/v1_1/dbmpxjsz1/image/upload`,
-      { method: 'POST', body: formData }
-    )
-    .then((res) => res.json())
-    .then((data) => {
-      setPublicId(data.public_id);
-      setDog(prev => ({ ...prev, image: data.secure_url })); // Update dog.image
-      console.log(data);
-    })
-    .catch((error) => console.error(error))
-  }
+  const uploadFormData = new FormData();
+  uploadFormData.append('image', selectedFile);
 
-  function submitForm() {
-    props.handleSubmit(dog);
+  try {
+    const uploadResponse = await fetch('http://localhost:8000/upload', {
+      method: 'POST',
+      body: uploadFormData
+    });
+
+    if (!uploadResponse.ok) {
+      const errorData = await uploadResponse.json();
+      throw new Error(errorData.error);
+    }
+
+    const { imageUrl, publicId } = await uploadResponse.json();
+    props.handleSubmit({ 
+      ...dog, 
+      image: imageUrl,
+      publicId: publicId 
+    });
+    
     resetForm();
+  } catch (error) {
+    console.error('Error:', error);
   }
+}
   
   function resetForm() {
     setDog({ name: "", image: "", age: "", breed: "", bio: "" });
 
     setSelectedFile(null);
     setPreviewUrl(null);
-    setPublicId(null);
     
     if (fileInputRef.current) {
       fileInputRef.current.value = "";

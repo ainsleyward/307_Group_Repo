@@ -7,6 +7,9 @@ import mongoose from "mongoose";
 import Dog from "./models/Dog.js";
 import Match from "./models/Match.js";
 import dashboardRoutes from "./routes/dashboard.js";
+import cloudinaryConfig from './cloudinary.js';
+const { cloudinary, uploadDog, uploadUser } = cloudinaryConfig;
+
 
 dotenv.config();
 
@@ -36,14 +39,29 @@ app.get("/dogs", (req, res) => {
       .catch((err) => res.status(500).send(err.message)); // server error
 });
 
+app.post('/upload', uploadDog.single('image'), async (req, res) => {
+  try {
+    if (!req.file) {
+      return res.status(400).json({ error: 'No file uploaded' });
+    }
+
+    res.status(201).json({
+      imageUrl: req.file.path, 
+      publicId: req.file.public_id 
+    });
+  } catch (err) {
+    console.error('Upload error:', err);
+    res.status(500).json({ error: 'Upload failed' });
+  }
+});
+
 // POST a new dog
-app.post("/dogs", (req, res) => {
+app.post("/dogs", async (req, res) => {
     const newDog = new Dog(req.body);
     newDog.save()
       .then((dog) => res.status(201).json(dog))
       .catch((err) => res.status(400).send(err.message)); //client-side error
 });
-
 
 
 app.post("/matches", (req, res) => {
