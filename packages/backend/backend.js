@@ -8,7 +8,7 @@ import Dog from "./models/Dog.js";
 import Match from "./models/Match.js";
 import dashboardRoutes from "./routes/dashboard.js";
 import cloudinaryConfig from './cloudinary.js';
-const { cloudinary, uploadDog, uploadUser } = cloudinaryConfig;
+const { cloudinary, upload } = cloudinaryConfig;
 
 
 dotenv.config();
@@ -39,15 +39,15 @@ app.get("/dogs", (req, res) => {
       .catch((err) => res.status(500).send(err.message)); // server error
 });
 
-app.post('/upload', uploadDog.single('image'), async (req, res) => {
+app.post('/upload', upload.single('image'), async (req, res) => {
   try {
     if (!req.file) {
       return res.status(400).json({ error: 'No file uploaded' });
     }
 
     res.status(201).json({
-      imageUrl: req.file.path, 
-      publicId: req.file.public_id 
+      imgUrl: req.file.path, 
+      publicId: req.file.filename
     });
   } catch (err) {
     console.error('Upload error:', err);

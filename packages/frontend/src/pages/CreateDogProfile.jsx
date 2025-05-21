@@ -7,6 +7,7 @@ function CreateDogProfile(props) {
   const [dog, setDog] = useState({
     name: "",
     image: "",
+    imgId: "",
     age: "",
     breed: "",
     bio: ""
@@ -14,7 +15,7 @@ function CreateDogProfile(props) {
 
   const [selectedFile, setSelectedFile] = useState(null);
   const [previewUrl, setPreviewUrl] = useState(null);
-  const fileInputRef = useRef(null);
+  //const fileInputRef = useRef(null);
 
 
   function handleChange(event) {
@@ -54,13 +55,13 @@ function CreateDogProfile(props) {
       throw new Error(errorData.error);
     }
 
-    const { imageUrl, publicId } = await uploadResponse.json();
-    props.handleSubmit({ 
-      ...dog, 
-      image: imageUrl,
-      publicId: publicId 
-    });
-    
+    const { imgUrl, publicId } = await uploadResponse.json();
+
+    dog.image = imgUrl;
+    dog.imgId = publicId;
+
+    setDog(dog);
+    props.handleSubmit(dog);
     resetForm();
   } catch (error) {
     console.error('Error:', error);
@@ -68,14 +69,10 @@ function CreateDogProfile(props) {
 }
   
   function resetForm() {
-    setDog({ name: "", image: "", age: "", breed: "", bio: "" });
+    setDog({ name: "", image: "", imgId: "", age: "", breed: "", bio: "" });
 
     setSelectedFile(null);
     setPreviewUrl(null);
-    
-    if (fileInputRef.current) {
-      fileInputRef.current.value = "";
-    }
   }
 
 
@@ -95,7 +92,6 @@ function CreateDogProfile(props) {
         type="file" 
         accept="image/*"
         id="image"
-        ref={fileInputRef}
         onChange={handleFileSelect}
       />
 
