@@ -1,6 +1,8 @@
 //Home.jsx
 import React from "react";
 import "../styles/Home.css";
+import { Link } from "react-router-dom";
+
 import pawIcon2 from "../assets/paw-icon.png";
 import heartIcon from "../assets/heart-icon.png";
 import pawIcon from "../assets/paw.png";
@@ -28,10 +30,13 @@ function Home() {
           <h1 className="title">Welcome to Woofer</h1>
           <img src={pawIcon2} alt="Paw" className="decor-paw" />
           <p className="subtitle">The #1 social network for pups and their people.</p>
-          <button className="get-started-button">Get Started</button>
+          <Link to="/login">
+            <button className="get-started-button">Get Started</button>
+          </Link>
         </div>
       </div>
     </div>
+    
   );
 }
 
