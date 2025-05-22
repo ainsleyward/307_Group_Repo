@@ -15,7 +15,6 @@ function CreateDogProfile(props) {
 
   const [selectedFile, setSelectedFile] = useState(null);
   const [previewUrl, setPreviewUrl] = useState(null);
-  //const fileInputRef = useRef(null);
 
 
   function handleChange(event) {
@@ -57,10 +56,11 @@ function CreateDogProfile(props) {
 
     const { imgUrl, publicId } = await uploadResponse.json();
 
+    // update dog
     dog.image = imgUrl;
     dog.imgId = publicId;
-
     setDog(dog);
+
     props.handleSubmit(dog);
     resetForm();
   } catch (error) {

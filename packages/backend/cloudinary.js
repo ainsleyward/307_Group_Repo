@@ -15,7 +15,7 @@ cloudinary.config({
   shorten: true
 });
 
-// config dog storage
+// config storage
 const imgStorage = new CloudinaryStorage({
   cloudinary: cloudinary, // uses API secrets
   params: {
