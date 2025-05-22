@@ -10,7 +10,7 @@ function Login() {
       <nav className="navbar">
         <div className="navbar-left">
           <img src={pawIcon} alt="Paw Icon" className="nav-icon" />
-          <span className="brand-name">Woofers</span>
+          <span className="brand-name">Woofer</span>
         </div>
         <div className="navbar-right">
           <Link to="/" className="nav-link">Home</Link>
