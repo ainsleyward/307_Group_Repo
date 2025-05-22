@@ -30,7 +30,7 @@ function SignUp() {
 
     if (Object.keys(newErrors).length === 0) {
       console.log("Creating account:", { email, password });
-      // Call your signup API here later
+      // Call signup API here later
     }
   };
 
@@ -39,7 +39,7 @@ function SignUp() {
       <div className="navbar">
         <div className="navbar-left">
           <img src="/src/assets/paw.png" alt="Paw" className="nav-icon" />
-          <h1 className="brand-name"> Woofers</h1>
+          <h1 className="brand-name"> Woofer</h1>
         </div>
         <div className="navbar-right">
           <Link to="/" className="nav-link">Home</Link>
