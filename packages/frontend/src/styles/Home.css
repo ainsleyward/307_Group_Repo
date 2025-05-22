@@ -1,93 +1,44 @@
-/* Home.css */
 .home-container {
-  min-height: 100vh;
-  background-color: #e7d7f5; /* Figma background color */
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 2rem;
-}
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    background: #F6D8C0;
+    font-family: 'Fredoka', sans-serif;
+  }
+  
+  .title {
+    font-size: 4rem;
+    color: #6C4F4B;
+    margin-bottom: 0.5rem;
+  }
+  
+  .subtitle {
+    font-size: 1.5rem;
+    color: #6C4F4B;
+    margin-bottom: 2rem;
+  }
+  
+  .home-button {
+    background-color: #A97E70;
+    font-family: 'Fredoka', sans-serif;
+    color: white;
+    border: none;
+    padding: 1rem 2rem;
+    font-size: 1rem;
+    border-radius: 500px;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+  }
+  
+  .home-button:hover {
+    background-color: #6C4F4B;
+    color: white;
+  }
 
-.hero-section {
-  text-align: center;
-  background-color: #e6d6f4;
-  padding: 4rem 1rem;
-  position: relative;
-}
-
-
-.logo-row {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  gap: 0.5rem;
-  margin-bottom: 1rem;
-}
-
-.brand {
-  font-size: 1.5rem;
-  font-family: 'Fredoka', sans-serif;
-  font-weight: bold;
-  color: white;
-}
-
-.title {
-  font-size: 4.5rem;
-  font-family: 'Fredoka', sans-serif;
-  font-weight: 700;
-  margin-bottom: 0.5rem;
-  color: #1a1a1a;
-}
-
-.subtitle {
-  font-size: 1.5rem;
-  font-family: 'Fredoka', sans-serif;
-  margin-bottom: 1.5rem;
-}
-
-.get-started-button {
-  background-color: #8b6d9c;
-  color: white;
-  padding: 0.7rem 1.2rem;
-  font-size: 1rem;
-  font-family: 'Fredoka', sans-serif;
-  border: none;
-  border-radius: 20px;
-  cursor: pointer;
-}
-
-.hero-icons {
-  position: absolute;
-  width: 100%;
-  top: 0;
-  left: 0;
-}
-
-.paw-button {
-  width: 60px;
-  height: 55px;
-  background: #FFFFFF;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  padding: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0px 2px 4px rgba(0,0,0,0.1);
-}
-
-.paw-image {
-  width: 30px;
-  height: auto;
-}
-
-.heart-icon {
-  position: absolute;
-  top: 20%;
-  right: 10%;
-  width: 50px;
-  opacity: 0.6;
-}
-
+  .dog-image {
+    width: 350px;
+    height: 400px;
+  }
+  
