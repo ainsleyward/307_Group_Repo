@@ -39,7 +39,7 @@ function SignUp() {
       <div className="navbar">
         <div className="navbar-left">
           <img src="/src/assets/paw.png" alt="Paw" className="nav-icon" />
-          <h1 className="brand-name">woofers</h1>
+          <h1 className="brand-name"> Woofers</h1>
         </div>
         <div className="navbar-right">
           <Link to="/" className="nav-link">Home</Link>
