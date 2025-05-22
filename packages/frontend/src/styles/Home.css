@@ -12,7 +12,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #8b6d9c;
+  background-color: #826997;
   padding: 1rem 2rem;
   color: white;
 }
@@ -78,7 +78,7 @@
 .decor-paw {
   position: absolute;
   bottom: -140px;
-  left: -250px;
+  left: -220px;
   width: 300px;
   transform: rotate(20deg);
   opacity: 0.7;
