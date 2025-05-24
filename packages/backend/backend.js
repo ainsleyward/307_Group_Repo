@@ -55,6 +55,13 @@ app.post('/upload', upload.single('image'), async (req, res) => {
   }
 });
 
+// internal API for image deletion
+app.delete('/upload/:publicId', (req, res) => {
+  cloudinary.uploader.destroy(req.params.publicId)
+  .then(() => res.status(204).send())
+  .catch((error) => res.status(500).json(error));
+});
+
 // POST a new dog
 app.post("/dogs", async (req, res) => {
     const newDog = new Dog(req.body);
