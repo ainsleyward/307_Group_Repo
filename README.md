@@ -12,10 +12,8 @@ Please follow standard JavaScript coding conventions:
 
 ### VSC Prettier Plug-In Setup
 
-1. Search for **Prettier ESlint** in the Extensions tab of Visual Studio Code.
-2. Install the extension into the IDE.
-3. Follow these instructions from the "Usage" section to get Prettier fully set up:
-   - [Automatically Format Code on Save with Prettier in VSC](https://blog.yogeshchavan.dev/automatically-format-code-on-file-save-in-visual-studio-code-using-prettier)
+1. Install **Prettier - Code formatter** by Prettier & **ESLint** by Microsoft on VSCode extensions.
+2. Run npm i to install dependencies.
 
 ### Environment Setup to start programming
 
