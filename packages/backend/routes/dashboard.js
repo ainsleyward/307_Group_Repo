@@ -17,16 +17,17 @@ router.get("/:userId", async (req, res) => {
       ? await Dog.findById(currentDogId)
       : await Dog.findById(user.dogs[0]);
 
-    if (!currentDog) return res.status(404).json({ error: "Current dog not found" });
+    if (!currentDog)
+      return res.status(404).json({ error: "Current dog not found" });
 
     const otherDogs = await Dog.find({
       _id: { $ne: currentDog._id },
-      owner: { $ne: user._id }
+      owner: { $ne: user._id },
     }).populate("owner");
 
     const normalize = (str) => str?.toLowerCase().trim();
-    let locationMatches = otherDogs.filter((dog) =>
-      normalize(dog.owner?.city) === normalize(user.city)
+    let locationMatches = otherDogs.filter(
+      (dog) => normalize(dog.owner?.city) === normalize(user.city),
     );
     locationMatches = locationMatches.sort(() => 0.5 - Math.random());
 
@@ -35,7 +36,7 @@ router.get("/:userId", async (req, res) => {
     res.json({
       userName: user.firstName,
       currentDog,
-      matches
+      matches,
     });
   } catch (err) {
     res.status(500).json({ error: "Server error" });

@@ -42,9 +42,15 @@ function SignUp() {
           <h1 className="brand-name"> Woofer</h1>
         </div>
         <div className="navbar-right">
-          <Link to="/" className="nav-link">Home</Link>
-          <Link to="/about" className="nav-link">About Us</Link>
-          <Link to="/blog" className="nav-link">Blog</Link>
+          <Link to="/" className="nav-link">
+            Home
+          </Link>
+          <Link to="/about" className="nav-link">
+            About Us
+          </Link>
+          <Link to="/blog" className="nav-link">
+            Blog
+          </Link>
         </div>
       </div>
 
@@ -77,12 +83,18 @@ function SignUp() {
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
           />
-          {errors.confirmPassword && <p className="error-text">{errors.confirmPassword}</p>}
+          {errors.confirmPassword && (
+            <p className="error-text">{errors.confirmPassword}</p>
+          )}
 
-          <button type="submit" className="login-button">Sign Up</button>
+          <button type="submit" className="login-button">
+            Sign Up
+          </button>
 
           <div className="login-links">
-            <Link to="/login" className="signup-link">Already have an account? Login</Link>
+            <Link to="/login" className="signup-link">
+              Already have an account? Login
+            </Link>
           </div>
         </form>
       </div>

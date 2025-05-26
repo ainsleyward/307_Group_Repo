@@ -24,7 +24,6 @@ export function registerUser(req, res) {
   }
 }
 
-
 function generateAccessToken(username) {
   return new Promise((resolve, reject) => {
     jwt.sign(
@@ -37,11 +36,10 @@ function generateAccessToken(username) {
         } else {
           resolve(token);
         }
-      }
+      },
     );
   });
 }
-
 
 export function authenticateUser(req, res, next) {
   const authHeader = req.headers["authorization"];
@@ -52,27 +50,20 @@ export function authenticateUser(req, res, next) {
     console.log("No token received");
     res.status(401).end();
   } else {
-    jwt.verify(
-      token,
-      process.env.TOKEN_SECRET,
-      (error, decoded) => {
-        if (decoded) {
-          next();
-        } else {
-          console.log("JWT error:", error);
-          res.status(401).end();
-        }
+    jwt.verify(token, process.env.TOKEN_SECRET, (error, decoded) => {
+      if (decoded) {
+        next();
+      } else {
+        console.log("JWT error:", error);
+        res.status(401).end();
       }
-    );
+    });
   }
 }
 
-
 export function loginUser(req, res) {
   const { username, pwd } = req.body; // from form
-  const retrievedUser = creds.find(
-    (c) => c.username === username
-  );
+  const retrievedUser = creds.find((c) => c.username === username);
 
   if (!retrievedUser) {
     // invalid username

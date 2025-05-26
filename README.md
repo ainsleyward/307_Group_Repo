@@ -5,9 +5,10 @@
 ## Contributing
 
 Please follow standard JavaScript coding conventions:
+
 - [JavaScript Coding Conventions – W3Schools](https://www.w3schools.com/js/js_conventions.asp)
 
-## Env and IDE Setup 
+## Env and IDE Setup
 
 ### VSC Prettier Plug-In Setup
 
@@ -17,6 +18,7 @@ Please follow standard JavaScript coding conventions:
    - [Automatically Format Code on Save with Prettier in VSC](https://blog.yogeshchavan.dev/automatically-format-code-on-file-save-in-visual-studio-code-using-prettier)
 
 ### Environment Setup to start programming
+
 - Run, on the root directory of the project, the script ./initenv.sh
 
 ## Woofer API

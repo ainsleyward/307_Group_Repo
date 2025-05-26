@@ -31,20 +31,24 @@ function Home() {
   return (
     <div className="home-container">
       <h1 className="title">Welcome to Woofer!</h1>
-      <p className="subtitle">The #1 Social Network for Pups and their People.</p>
+      <p className="subtitle">
+        The #1 Social Network for Pups and their People.
+      </p>
       <button className="home-button">Woof Woof</button>
-  
+
       <div style={{ paddingTop: "2rem" }}>
         <h2>Add Your Dog</h2>
         <Form handleSubmit={handleSubmit} />
-  
+
         <h2>Meet a New Furry Friend:</h2>
         <div className="dog-list">
           {dogs.map((dog, index) => (
             <div key={index} className="dog-card">
               <img src={dog.image} alt={dog.name} className="dog-image" />
               <h3>{dog.name}</h3>
-              <p><strong>Breed:</strong> {dog.breed}</p>
+              <p>
+                <strong>Breed:</strong> {dog.breed}
+              </p>
               <p>{dog.bio}</p>
             </div>
           ))}
@@ -52,7 +56,6 @@ function Home() {
       </div>
     </div>
   );
-  
 }
 
 export default Home;

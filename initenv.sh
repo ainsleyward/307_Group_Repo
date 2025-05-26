@@ -6,7 +6,6 @@ set -e
 echo "Setting up backend..."
 cd packages/backend
 npm init -y
-#npm install express mongoose cors dotenv cloudinary
 npm i
 
 # navigate to frontend and install
@@ -14,7 +13,6 @@ echo "Setting up frontend..."./
 cd ..
 cd frontend
 npm install
-#npm i react-router-dom @cloudinary/url-gen
 npm audit fix # automatically audit
 
 cd ../.. # go back to root
