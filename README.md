@@ -14,6 +14,7 @@ Please follow standard JavaScript coding conventions:
 
 1. Install **Prettier - Code formatter** by Prettier & **ESLint** by Microsoft on VSCode extensions.
 2. Run npm i to install dependencies.
+3. To autofix errors, run **npx prettier --write .**
 
 ### Environment Setup to start programming
 
