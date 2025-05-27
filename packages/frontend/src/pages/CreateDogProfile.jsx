@@ -85,7 +85,7 @@ function CreateDogProfile(props) {
 
   function resetForm() {
     setDog({ name: "", image: "", imgId: "", age: "", breed: "", bio: "" });
-    let selectedFile = null;
+    selectedFile = null;
     setPreviewUrl(null);
   }
 

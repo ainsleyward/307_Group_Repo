@@ -4,7 +4,7 @@ import "../styles/Home.css";
 import "../styles/Swipe.css";
 import { useParams } from "react-router-dom";
 
-const swipingDogId = "123";
+//const swipingDogId = "123";
 
 function Swipe() {
   const { dogId } = useParams();

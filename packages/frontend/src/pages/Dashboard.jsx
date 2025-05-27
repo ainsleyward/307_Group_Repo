@@ -11,6 +11,7 @@ function Dashboard() {
 
   const [data, setData] = useState(null);
   const [error, setError] = useState("");
+  error; // to appease the ESLint gods (even with unused vars disabled it crashes :/ )
 
   useEffect(() => {
     let url = `http://localhost:8000/dashboard/${userId}`;

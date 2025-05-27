@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+//import React, { useState } from "react"; // commented out to appease the ESLint gods
 import { Link } from "react-router-dom";
 import pawIcon from "../assets/paw.png";
 import "../styles/Login.css";

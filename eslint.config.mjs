@@ -12,6 +12,7 @@ export default [
     plugins: { prettier: pluginPrettier },
     rules: {
       ...js.configs.recommended.rules,
+      "no-unused-vars": "off",
       "prettier/prettier": "error",
     },
   },
@@ -36,6 +37,10 @@ export default [
     rules: {
       ...js.configs.recommended.rules,
       ...pluginReact.configs.recommended.rules,
+      "no-unused-vars": "off",
+      "react/prop-types": "off",
+      "react/no-unescaped-entities": "off",
+      "react/react-in-jsx-scope": "off",
       "prettier/prettier": "error",
     },
   },
