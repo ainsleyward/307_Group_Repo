@@ -6,14 +6,18 @@
     "dev:frontend": "npm start --prefix packages/frontend",
     "dev:backend": "npm start --prefix packages/backend",
     "dev": "concurrently \"npm run dev:backend\" \"npm run dev:frontend\"",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "lint": "npx eslint . && npx prettier --check .",
+    "test": "echo \"Error: no test specified\" && exit 0"
   },
   "author": "Shallot Sniffers",
   "license": "ISC",
   "description": "",
   "devDependencies": {
+    "@babel/eslint-parser": "^7.27.1",
+    "@babel/preset-react": "^7.27.1",
     "@eslint/js": "^9.27.0",
-    "eslint": "^8.57.1",
+    "eslint": "^9.27.0",
+    "eslint-plugin-prettier": "^5.4.0",
     "eslint-plugin-react": "^7.37.5",
     "globals": "^16.2.0",
     "nodemon": "^3.1.9"

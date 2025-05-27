@@ -2,20 +2,41 @@ import js from "@eslint/js";
 import globals from "globals";
 import pluginReact from "eslint-plugin-react";
 import pluginPrettier from "eslint-plugin-prettier";
-import { defineConfig } from "eslint/config";
+import babelParser from "@babel/eslint-parser";
 
-export default defineConfig([
+export default [
+  // Backend (Node.js)
   {
-    files: ["**/*.{js,mjs,cjs,jsx}"],
-    plugins: { js, prettier: pluginPrettier },
-    extends: [
-      "js/recommended",
-      "plugin:prettier/recommended", // Integrates Prettier
-    ],
-    languageOptions: { globals: globals.browser },
+    files: ["packages/backend/**/*.js"],
+    languageOptions: { globals: globals.node },
+    plugins: { prettier: pluginPrettier },
     rules: {
-      "prettier/prettier": ["error", {}], // Ensures Prettier formatting is enforced
+      ...js.configs.recommended.rules,
+      "prettier/prettier": "error",
     },
   },
-  pluginReact.configs.flat.recommended,
-]);
+
+  // Frontend (React)
+  {
+    files: ["packages/frontend/**/*.jsx"],
+    languageOptions: {
+      parser: babelParser,
+      parserOptions: {
+        requireConfigFile: false,
+        babelOptions: {
+          presets: ["@babel/preset-react"],
+        },
+      },
+      globals: globals.browser,
+    },
+    plugins: { react: pluginReact, prettier: pluginPrettier },
+    settings: {
+      react: { version: "detect" },
+    },
+    rules: {
+      ...js.configs.recommended.rules,
+      ...pluginReact.configs.recommended.rules,
+      "prettier/prettier": "error",
+    },
+  },
+];
