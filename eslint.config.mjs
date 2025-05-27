@@ -41,6 +41,7 @@ export default [
       "react/prop-types": "off",
       "react/no-unescaped-entities": "off",
       "react/react-in-jsx-scope": "off",
+      "react-hooks/exhaustive-deps": "off",
       "prettier/prettier": "error",
     },
   },

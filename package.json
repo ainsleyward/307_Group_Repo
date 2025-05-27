@@ -2,6 +2,10 @@
   "name": "Woofer",
   "version": "1.0.0",
   "main": "index.js",
+  "workspaces": [
+    "packages/frontend",
+    "packages/backend"
+  ],
   "scripts": {
     "dev:frontend": "npm start --prefix packages/frontend",
     "dev:backend": "npm start --prefix packages/backend",
