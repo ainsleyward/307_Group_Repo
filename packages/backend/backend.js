@@ -89,6 +89,6 @@ app.delete("/dev/clear-matches", async (req, res) => {
   }
 });
 
-app.listen(port, () => {
-  console.log(`Server listening at http://localhost:${port}`);
+app.listen(process.env.PORT || port, () => {
+  console.log(`REST API is listening.`);
 });
