@@ -42,10 +42,6 @@ function SignUp() {
           <h1 className="brand-name"> Woofer</h1>
         </div>
         <div className="navbar-right">
-<<<<<<< HEAD
-          <Link to="/" className="nav-link">Home</Link>
-          <Link to="/about" className="nav-link">About Us</Link>
-=======
           <Link to="/" className="nav-link">
             Home
           </Link>
@@ -55,7 +51,6 @@ function SignUp() {
           <Link to="/blog" className="nav-link">
             Blog
           </Link>
->>>>>>> refs/remotes/origin/main
         </div>
       </div>
 
