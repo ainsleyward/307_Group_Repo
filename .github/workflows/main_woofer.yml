@@ -26,12 +26,12 @@ jobs:
       - name: npm install, build, and test
         run: |
           npm install --workspaces=false
-          npm run -w express-backend build --if-present
-          npm run -w express-backend test --if-present
+          npm run build --if-present
+          npm run test --if-present
         working-directory: ./packages/backend
 
       - name: Zip artifact for deployment
-        run: zip release.zip ./packages/backend/* -r -d dist
+        run: zip release.zip ./packages/backend/* -r
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
@@ -71,4 +71,4 @@ jobs:
         with:
           app-name: "woofer"
           slot-name: "Production"
-          package: ./dist
+          package: .
