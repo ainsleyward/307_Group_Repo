@@ -5,6 +5,7 @@ import "../styles/Swipe.css";
 import { useParams } from "react-router-dom";
 import domain from "../domain";
 
+console.log(domain);
 //const swipingDogId = "123";
 
 function Swipe() {

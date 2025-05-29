@@ -8,7 +8,7 @@ function Home() {
   const [dogs, setDogs] = useState([]);
 
   function handleSubmit(dog) {
-    fetch(`${domain}}/dogs`, {
+    fetch(`${domain}/dogs`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

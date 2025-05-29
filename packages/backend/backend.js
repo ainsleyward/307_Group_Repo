@@ -15,10 +15,12 @@ dotenv.config();
 const app = express();
 const port = 8000;
 
+/*
 const allowedOrigins = [
   "https://icy-island-011633b1e.6.azurestaticapps.net",
   "http://localhost:5173", // for local dev
 ];
+
 
 const corsOptions = {
   origin: (origin, callback) => {
@@ -29,7 +31,7 @@ const corsOptions = {
     }
   },
   credentials: true, // if you’re using cookies/auth headers
-};
+};*/
 
 mongoose
   .connect(process.env.MONGO_URI, {
@@ -39,7 +41,7 @@ mongoose
   .then(() => console.log("MongoDB connected"))
   .catch((err) => console.error(err));
 
-app.use(cors(corsOptions));
+app.use(cors());
 app.use(express.json());
 
 app.get("/", (req, res) => {
