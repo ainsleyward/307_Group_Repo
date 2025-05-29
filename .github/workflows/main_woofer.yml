@@ -31,7 +31,7 @@ jobs:
         working-directory: ./packages/backend
 
       - name: Zip artifact for deployment
-        run: zip release.zip ./packages/backend/* -r
+        run: zip release.zip ./packages/backend/* -r -d dist
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
@@ -71,4 +71,4 @@ jobs:
         with:
           app-name: "woofer"
           slot-name: "Production"
-          package: ./packages/backend/dist
+          package: ./dist
