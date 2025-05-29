@@ -44,7 +44,6 @@ function SignUp() {
         <div className="navbar-right">
           <Link to="/" className="nav-link">Home</Link>
           <Link to="/about" className="nav-link">About Us</Link>
-          <Link to="/blog" className="nav-link">Blog</Link>
         </div>
       </div>
 

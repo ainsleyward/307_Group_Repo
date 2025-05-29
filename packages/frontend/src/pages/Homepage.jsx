@@ -19,7 +19,6 @@ function Homepage() {
         <div className="nav-links">
           <a href="#">Home</a>
           <a href="#">About Us</a>
-          <a href="#">Blog</a>
         </div>
       </nav>
 
