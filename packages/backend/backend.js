@@ -22,7 +22,7 @@ mongoose
   })
   .then(() => console.log("MongoDB connected"))
   .catch((err) => console.error(err));
-
+/*
 const allowedOrigins = [
   "https://icy-island-011633b1e.6.azurestaticapps.net",
   "http://localhost:5173", // for local dev
@@ -37,7 +37,7 @@ const corsOptions = {
     }
   },
   credentials: false,
-};
+};*/
 //app.use(cors(corsOptions));
 app.use(express.json());
 app.use(cors());
