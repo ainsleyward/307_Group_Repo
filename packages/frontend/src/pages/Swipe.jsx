@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import "../styles/Home.css";
 import "../styles/Swipe.css";
 import { useParams } from "react-router-dom";
+import domain from "../domain";
 
 //const swipingDogId = "123";
 
@@ -12,7 +13,7 @@ function Swipe() {
   const [tempIndex, setTempIndex] = useState(0);
 
   useEffect(() => {
-    fetch("http://localhost:8000/dogs")
+    fetch(`${domain}/dogs`)
       .then((res) => res.json())
       .then((data) => {
         const filtered = data.filter((dog) => dog._id !== dogId);
@@ -26,7 +27,7 @@ function Swipe() {
   }
 
   function handleSubmit(targetDog) {
-    fetch("http://localhost:8000/Matches", {
+    fetch(`${domain}/Matches`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

@@ -2,6 +2,7 @@
 // upload to cloudinary using URL from previewURL, then get URL from cloudinary and
 // send that to the
 import React, { useState } from "react";
+import domain from "../domain";
 
 function CreateDogProfile(props) {
   const [dog, setDog] = useState({
@@ -33,7 +34,7 @@ function CreateDogProfile(props) {
 
     // discard previous picture
     if (dog.imgId != null) {
-      fetch(`http://localhost:8000/upload/${encodeURIComponent(dog.imgId)}`, {
+      fetch(`${domain}/upload/${encodeURIComponent(dog.imgId)}`, {
         method: "DELETE",
       })
         .then((res) => {
@@ -57,7 +58,7 @@ function CreateDogProfile(props) {
 
     // upload new picture
     try {
-      const uploadResponse = await fetch("http://localhost:8000/upload", {
+      const uploadResponse = await fetch(`${domain}/upload`, {
         method: "POST",
         body: uploadFormData,
       });

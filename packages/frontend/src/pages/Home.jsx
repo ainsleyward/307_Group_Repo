@@ -2,12 +2,13 @@
 import React, { useState, useEffect } from "react";
 import "../styles/Home.css";
 import Form from "./CreateDogProfile";
+import domain from "../domain";
 
 function Home() {
   const [dogs, setDogs] = useState([]);
 
   function handleSubmit(dog) {
-    fetch("http://localhost:8000/dogs", {
+    fetch(`${domain}}/dogs`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -22,7 +23,7 @@ function Home() {
   }
 
   useEffect(() => {
-    fetch("http://localhost:8000/dogs")
+    fetch(`${domain}/dogs`)
       .then((res) => res.json())
       .then((data) => setDogs(data))
       .catch((error) => console.error(error));

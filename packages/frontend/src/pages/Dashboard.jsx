@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import { useParams, useSearchParams } from "react-router-dom";
 import "../styles/Dashboard.css";
 import Sidebar from "../components/Sidebar";
+import domain from "../domain";
 
 function Dashboard() {
   const { userId } = useParams();
@@ -14,7 +15,7 @@ function Dashboard() {
   error; // to appease the ESLint gods (even with unused vars disabled it crashes :/ )
 
   useEffect(() => {
-    let url = `http://localhost:8000/dashboard/${userId}`;
+    let url = `${domain}/dashboard/${userId}`;
     if (dogId) url += `?dogId=${dogId}`;
 
     fetch(url)
