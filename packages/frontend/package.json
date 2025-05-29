@@ -1,12 +1,12 @@
 {
-  "name": "frontend",
+  "name": "react-frontend",
   "private": true,
   "version": "0.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "lint": "eslint .",
+    "lint": "npx eslint . && npx prettier --check .",
     "preview": "vite preview"
   },
   "dependencies": {

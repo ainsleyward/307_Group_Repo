@@ -5,18 +5,19 @@
 ## Contributing
 
 Please follow standard JavaScript coding conventions:
+
 - [JavaScript Coding Conventions – W3Schools](https://www.w3schools.com/js/js_conventions.asp)
 
-## Env and IDE Setup 
+## Env and IDE Setup
 
 ### VSC Prettier Plug-In Setup
 
-1. Search for **Prettier ESlint** in the Extensions tab of Visual Studio Code.
-2. Install the extension into the IDE.
-3. Follow these instructions from the "Usage" section to get Prettier fully set up:
-   - [Automatically Format Code on Save with Prettier in VSC](https://blog.yogeshchavan.dev/automatically-format-code-on-file-save-in-visual-studio-code-using-prettier)
+1. Install **Prettier - Code formatter** by Prettier & **ESLint** by Microsoft on VSCode extensions.
+2. Run ./initenv.sh to: get dependencies and make .env file
+3. To autofix errors, run **npx prettier --write .**
 
 ### Environment Setup to start programming
+
 - Run, on the root directory of the project, the script ./initenv.sh
 
 ## Woofer API

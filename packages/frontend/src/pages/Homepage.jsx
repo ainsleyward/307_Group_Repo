@@ -28,14 +28,15 @@ function Homepage() {
           <img src={heartIcon} alt="Heart" className="decor-heart" />
           <h1 className="title">Welcome to Woofer</h1>
           <img src={pawIcon2} alt="Paw" className="decor-paw" />
-          <p className="subtitle">The #1 social network for pups and their people.</p>
+          <p className="subtitle">
+            The #1 social network for pups and their people.
+          </p>
           <Link to="/login">
             <button className="get-started-button">Get Started</button>
           </Link>
         </div>
       </div>
     </div>
-    
   );
 }
 

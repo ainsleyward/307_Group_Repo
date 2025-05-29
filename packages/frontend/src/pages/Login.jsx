@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+//import React, { useState } from "react"; // commented out to appease the ESLint gods
 import { Link } from "react-router-dom";
 import pawIcon from "../assets/paw.png";
 import "../styles/Login.css";
@@ -13,9 +13,15 @@ function Login() {
           <span className="brand-name">Woofer</span>
         </div>
         <div className="navbar-right">
-          <Link to="/" className="nav-link">Home</Link>
-          <Link to="/about" className="nav-link">About Us</Link>
-          <Link to="/blog" className="nav-link">Blog</Link>
+          <Link to="/" className="nav-link">
+            Home
+          </Link>
+          <Link to="/about" className="nav-link">
+            About Us
+          </Link>
+          <Link to="/blog" className="nav-link">
+            Blog
+          </Link>
         </div>
       </nav>
 
@@ -25,11 +31,21 @@ function Login() {
         <p className="login-subtitle">Log in to your account</p>
         <form className="login-form">
           <input type="email" placeholder="Email" className="login-input" />
-          <input type="password" placeholder="Password" className="login-input" />
-          <button type="submit" className="login-button">Login</button>
+          <input
+            type="password"
+            placeholder="Password"
+            className="login-input"
+          />
+          <button type="submit" className="login-button">
+            Login
+          </button>
           <div className="login-links">
-            <Link to="/forgot-password" className="forgot-link">Forgot Password?</Link>
-            <Link to="/signup" className="signup-link">Sign Up</Link>
+            <Link to="/forgot-password" className="forgot-link">
+              Forgot Password?
+            </Link>
+            <Link to="/signup" className="signup-link">
+              Sign Up
+            </Link>
           </div>
         </form>
       </div>

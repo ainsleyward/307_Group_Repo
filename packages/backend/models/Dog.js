@@ -18,9 +18,9 @@ const dogSchema = new mongoose.Schema({
   prompts: [
     {
       question: String,
-      answer: String
-    }
-  ]
+      answer: String,
+    },
+  ],
 });
 
 const Dog = mongoose.model("Dog", dogSchema, "Dogs");
