@@ -15,7 +15,6 @@ dotenv.config();
 const app = express();
 const port = 8000;
 
-/*
 const allowedOrigins = [
   "https://icy-island-011633b1e.6.azurestaticapps.net",
   "http://localhost:5173", // for local dev
@@ -30,9 +29,7 @@ const corsOptions = {
     }
   },
   credentials: true, // if you’re using cookies/auth headers
-};*/
-
-app.use(cors());
+};
 
 mongoose
   .connect(process.env.MONGO_URI, {
