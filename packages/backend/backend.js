@@ -15,6 +15,18 @@ dotenv.config();
 const app = express();
 const port = 8000;
 
+// set origins so cors gods are appeased
+const allowedOrigins = [
+  "https://icy-island-011633b1e.6.azurestaticapps.net",
+  "http://localhost:5173", // allow local dev
+];
+
+app.use(
+  cors({
+    origin: allowedOrigins,
+  }),
+);
+
 mongoose
   .connect(process.env.MONGO_URI, {
     useNewUrlParser: true,
