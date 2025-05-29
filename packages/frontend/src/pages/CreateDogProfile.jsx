@@ -8,7 +8,7 @@ function CreateDogProfile(props) {
   const [dog, setDog] = useState({
     name: "",
     image: "",
-    imgId: "",
+    imgId: null,
     age: "",
     breed: "",
     bio: "",
