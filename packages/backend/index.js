@@ -15,6 +15,9 @@ dotenv.config();
 const app = express();
 const port = process.env.PORT || 8000;
 
+app.use(express.json());
+app.use(cors());
+
 mongoose
   .connect(process.env.MONGO_URI, {
     useNewUrlParser: true,
@@ -39,8 +42,6 @@ const corsOptions = {
   credentials: false,
 };*/
 //app.use(cors(corsOptions));
-app.use(express.json());
-app.use(cors());
 
 app.get("/", (req, res) => {
   res.send("Hello World!");
@@ -60,7 +61,6 @@ app.post("/upload", upload.single("image"), async (req, res) => {
     if (!req.file) {
       return res.status(400).json({ error: "No file uploaded" });
     }
-
     res.status(201).json({
       imgUrl: req.file.path,
       publicId: req.file.filename,

@@ -13,7 +13,7 @@ Please follow standard JavaScript coding conventions:
 ### VSC Prettier Plug-In Setup
 
 1. Install **Prettier - Code formatter** by Prettier & **ESLint** by Microsoft on VSCode extensions.
-2. Run npm i to install dependencies.
+2. Run ./initenv.sh to: get dependencies and make .env file
 3. To autofix errors, run **npx prettier --write .**
 
 ### Environment Setup to start programming
