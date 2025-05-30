@@ -4,6 +4,7 @@ import { useParams, useSearchParams } from "react-router-dom";
 import "../styles/Dashboard.css";
 import Sidebar from "../components/Sidebar";
 import domain from "../domain";
+import DogProfileModal from "../components/DogProfileModal";
 
 function Dashboard() {
   const { userId } = useParams();
@@ -13,6 +14,9 @@ function Dashboard() {
   const [data, setData] = useState(null);
   const [error, setError] = useState("");
   error; // to appease the ESLint gods (even with unused vars disabled it crashes :/ )
+  const [showModal, setShowModal] = useState(false);
+  const [selectedDog, setSelectedDog] = useState(null);
+
 
   useEffect(() => {
     let url = `${domain}/dashboard/${userId}`;
@@ -68,7 +72,7 @@ function Dashboard() {
             />
           </svg>
         </div>
-
+  
         <div className="dashboard-subheader">
           <h2>Pawfect pups for {currentDog.name}</h2>
           <div className="dog-dropdown">
@@ -93,7 +97,7 @@ function Dashboard() {
             />
           </div>
         </div>
-
+  
         <div className="standout-dogs">
           {matches.map((match) => (
             <div key={match._id} className="match-card">
@@ -107,7 +111,15 @@ function Dashboard() {
                     e.target.src = "/images/default-dog.png";
                   }}
                 />
-                <button className="view-profile">View profile</button>
+                <button
+                  className="view-profile"
+                  onClick={() => {
+                    setSelectedDog(match);
+                    setShowModal(true);
+                  }}
+                >
+                  View profile
+                </button>
               </div>
               <div className="tags">
                 {match.tags.map((tag, i) => (
@@ -121,7 +133,7 @@ function Dashboard() {
             </div>
           ))}
         </div>
-
+  
         <div className="dashboard-banner">
           <div className="banner-text">
             <p>
@@ -140,8 +152,30 @@ function Dashboard() {
           </div>
         </div>
       </div>
+  
+      <DogProfileModal show={showModal} onClose={() => setShowModal(false)}>
+        {selectedDog && (
+          <div className="modal-body">
+            <img
+              src={selectedDog.image}
+              alt={selectedDog.name}
+              className="modal-dog-img"
+            />
+            <div className="modal-dog-details">
+              <h2 className="dog-name-heading">{selectedDog.name}</h2>
+              <p>{selectedDog.breed}</p>
+              <div className="modal-tags">
+                {selectedDog.tags.map((tag, i) => (
+                  <span key={i} className="tag">{tag}</span>
+                ))}
+              </div>
+              <p className="modal-bio">{selectedDog.bio}</p>
+            </div>
+          </div>
+        )}
+      </DogProfileModal>
     </div>
   );
-}
+}  
 
 export default Dashboard;
