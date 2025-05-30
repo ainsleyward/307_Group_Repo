@@ -1,80 +1,94 @@
 // src/pages/Form.jsx
-// upload to cloudinary using URL from previewURL, then get URL from cloudinary and 
-// send that to the 
-import React, { useState, useEffect, useRef } from "react";
+// upload to cloudinary using URL from previewURL, then get URL from cloudinary and
+// send that to the
+import React, { useState } from "react";
+import domain from "../domain";
 
 function CreateDogProfile(props) {
   const [dog, setDog] = useState({
     name: "",
     image: "",
-    imgId: "",
+    imgId: null,
     age: "",
     breed: "",
-    bio: ""
+    bio: "",
   });
 
-  const [selectedFile, setSelectedFile] = useState(null);
   const [previewUrl, setPreviewUrl] = useState(null);
-  //const fileInputRef = useRef(null);
-
+  let selectedFile = null;
 
   function handleChange(event) {
     const { name, value } = event.target;
     setDog((prevDog) => ({
       ...prevDog,
-      [name]: value
+      [name]: value,
     }));
   }
 
-  const handleFileSelect = (e) => {
+  const handleFileSelect = async (e) => {
     const file = e.target.files[0];
-    if(!file)
-    {
+    if (!file) {
       console.log("No file selected");
       return;
     }
 
-    setSelectedFile(file);
-    setPreviewUrl(URL.createObjectURL(file));
-  };
+    // discard previous picture
+    if (dog.imgId != null) {
+      fetch(`${domain}/upload/${encodeURIComponent(dog.imgId)}`, {
+        method: "DELETE",
+      })
+        .then((res) => {
+          if (res.status === 204) {
+            console.log("Image deleted successfully!");
+          } else {
+            throw new Error("");
+          }
+        })
+        .catch((error) => console.log(error));
 
-  const submitForm = async (e) => {
-    e.preventDefault();
-
-  const uploadFormData = new FormData();
-  uploadFormData.append('image', selectedFile);
-
-  try {
-    const uploadResponse = await fetch('http://localhost:8000/upload', {
-      method: 'POST',
-      body: uploadFormData
-    });
-
-    if (!uploadResponse.ok) {
-      const errorData = await uploadResponse.json();
-      throw new Error(errorData.error);
+      dog.imgId = null;
+      dog.image = null;
     }
 
-    const { imgUrl, publicId } = await uploadResponse.json();
+    selectedFile = file;
+    setPreviewUrl(URL.createObjectURL(file));
 
-    dog.image = imgUrl;
-    dog.imgId = publicId;
+    const uploadFormData = new FormData();
+    uploadFormData.append("image", selectedFile);
 
+    // upload new picture
+    try {
+      const uploadResponse = await fetch(`${domain}/upload`, {
+        method: "POST",
+        body: uploadFormData,
+      });
+
+      if (!uploadResponse.ok) {
+        const errorData = await uploadResponse.json();
+        throw new Error(errorData.error);
+      }
+
+      const { imgUrl, publicId } = await uploadResponse.json();
+
+      // update dog
+      dog.image = imgUrl;
+      dog.imgId = publicId;
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
+  function submitForm() {
     setDog(dog);
     props.handleSubmit(dog);
     resetForm();
-  } catch (error) {
-    console.error('Error:', error);
   }
-}
-  
+
   function resetForm() {
     setDog({ name: "", image: "", imgId: "", age: "", breed: "", bio: "" });
-
-    setSelectedFile(null);
+    selectedFile = null;
     setPreviewUrl(null);
   }
-
 
   return (
     <form>
@@ -87,19 +101,34 @@ function CreateDogProfile(props) {
         onChange={handleChange}
       />
 
-      <label htmlFor="image">Image</label>
+      {/* May wanna move into CSS file */}
+      <label
+        htmlFor="image"
+        style={{
+          display: "inline-block",
+          padding: "5px 10px",
+          backgroundColor: "#7700ff",
+          color: "#fff",
+          fontSize: "12px",
+          borderRadius: "12px",
+          cursor: "pointer",
+        }}
+      >
+        Choose Image
+      </label>
       <input
-        type="file" 
+        type="file"
         accept="image/*"
         id="image"
         onChange={handleFileSelect}
+        style={{ display: "none" }}
       />
 
       {previewUrl && (
         <img
           src={previewUrl}
           alt="Preview"
-          style={{ width: '200px', margin: '10px 0' }}
+          style={{ width: "150px", margin: "10px 0", padding: "10px 10px" }}
         />
       )}
 
@@ -130,11 +159,7 @@ function CreateDogProfile(props) {
         onChange={handleChange}
       />
 
-      <input
-        type="button"
-        value="Submit"
-        onClick={submitForm}
-      />
+      <input type="button" value="Submit" onClick={submitForm} />
     </form>
   );
 }
