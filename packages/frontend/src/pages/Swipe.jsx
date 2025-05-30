@@ -6,22 +6,32 @@ import { useParams } from "react-router-dom";
 import domain from "../domain";
 
 console.log(domain);
-//const swipingDogId = "123";
 
 function Swipe() {
   const { dogId } = useParams();
   const [dogs, setDogs] = useState([]);
   const [tempIndex, setTempIndex] = useState(0);
+  const [showCornerPopup, setShowCornerPopup] = useState(false);
+  const [showMatchModal, setShowMatchModal] = useState(false);
 
   useEffect(() => {
-    fetch(`${domain}/dogs`)
-      .then((res) => res.json())
-      .then((data) => {
-        const filtered = data.filter((dog) => dog._id !== dogId);
+    Promise.all([
+      fetch(`${domain}/dogs`).then(res => res.json()),
+      fetch(`${domain}/matches?swiperDogId=${dogId}`).then(res => res.json())
+    ])
+      .then(([allDogs, matches]) => {
+        const likedDogIds = new Set();
+        for (const match of matches) {
+          likedDogIds.add(match.targetDogId);
+        }
+        const filtered = allDogs.filter(
+          (dog) => dog._id !== dogId && !likedDogIds.has(dog._id)
+        );
         setDogs(filtered);
       })
-      .catch((error) => console.error(error));
+      .catch((error) => console.error("Error fetching dogs or matches:", error));
   }, []);
+
 
   function next() {
     setTempIndex((prevIndex) => (prevIndex + 1) % dogs.length);
@@ -41,6 +51,13 @@ function Swipe() {
       .then((res) => res.json())
       .then((data) => {
         console.log("Match:", data);
+        if (data.isMutualMatch) {
+          setShowMatchModal(true);
+        }
+        else {
+          setShowCornerPopup(true); 
+          setTimeout(() => setShowCornerPopup(false), 3000);
+        }
         next();
       })
       .catch((error) => console.error(error));
@@ -64,6 +81,14 @@ function Swipe() {
   return (
     <div className="swipe-container">
       <h1 className="title">Woofer</h1>
+
+      {showCornerPopup && (<div className="corner-popup"> Match sent! </div>)}
+
+      {showMatchModal && (
+        <div className="match-popup" onClick={() => setShowMatchModal(false)}>
+          <div className="match-popup-info">It's a Match!</div>
+        </div>
+      )}
 
       <div className="three-columns-grid">
         <div className="button-column">
@@ -104,6 +129,7 @@ function Swipe() {
           <p>{currentDog.bio}</p>
         </div>
         <div className="button-column">
+
           <button
             onClick={() => handleSubmit(currentDog)}
             className="icon-button"
@@ -145,5 +171,4 @@ function Swipe() {
 }
 
 export default Swipe;
-
 
