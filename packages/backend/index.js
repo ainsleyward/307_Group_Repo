@@ -90,6 +90,19 @@ app.post("/dogs", async (req, res) => {
 
 app.post("/matches", async (req, res) => {
   const { swiperDogId, targetDogId } = req.body;
+
+  if (!swiperDogId) {
+    return res.status(400).json({
+      error: "missing swiperDogId",
+    });
+  }
+
+  if (!targetDogId) {
+    return res.status(400).json({
+      error: "missing targetDogId",
+    });
+  }
+
   try {
     const newMatch = await Match.create({ swiperDogId, targetDogId });
     const isMatch = await Match.findOne({
@@ -102,7 +115,7 @@ app.post("/matches", async (req, res) => {
     });
   } catch (err) {
     console.error(err);
-    res.status(500).json({ error: "Internal server error" });
+    res.status(500).json({ error: "internal server error" });
   }
 });
 
@@ -113,7 +126,7 @@ app.get("/matches", async (req, res) => {
   }
   try {
     const matches = await Match.find({ swiperDogId });
-    res.json(matches);
+    res.status(200).json(matches);
   } catch (err) {
     res.status(500).json({ error: "error getting matches" });
   }
@@ -122,9 +135,9 @@ app.get("/matches", async (req, res) => {
 app.delete("/dev/clear-matches", async (req, res) => {
   try {
     await Match.deleteMany({});
-    res.send("All matches deleted");
+    res.send("all matches deleted");
   } catch (err) {
-    res.status(500).send("Error deleting matches");
+    res.status(500).send({ error: "error deleting matches" });
   }
 });
 

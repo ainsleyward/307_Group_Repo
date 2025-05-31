@@ -7,6 +7,8 @@ import domain from "../domain";
 
 console.log(domain);
 
+const popupTime = 3000;
+
 function Swipe() {
   const { dogId } = useParams();
   const [dogs, setDogs] = useState([]);
@@ -56,7 +58,7 @@ function Swipe() {
         }
         else {
           setShowCornerPopup(true); 
-          setTimeout(() => setShowCornerPopup(false), 3000);
+          setTimeout(() => setShowCornerPopup(false), popupTime);
         }
         next();
       })
