@@ -18,8 +18,13 @@ function Swipe() {
 
   useEffect(() => {
     Promise.all([
-      fetch(`${domain}/dogs`).then(res => res.json()),
-      fetch(`${domain}/matches?swiperDogId=${dogId}`).then(res => res.json())
+      fetch(`${domain}/dogs`)
+      .then(res => res.json())
+      .catch((error) => console.error("error fetching dogs", error)),
+
+      fetch(`${domain}/matches?swiperDogId=${dogId}`)
+      .then(res => res.json())
+      .catch((error) => console.error("error fetching matches:", error)),
     ])
       .then(([allDogs, matches]) => {
         const likedDogIds = new Set();
@@ -31,7 +36,7 @@ function Swipe() {
         );
         setDogs(filtered);
       })
-      .catch((error) => console.error("Error fetching dogs or matches:", error));
+      .catch((error) => console.error("alternate error:", error));
   }, []);
 
 
