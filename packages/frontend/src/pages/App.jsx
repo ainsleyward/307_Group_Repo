@@ -6,6 +6,8 @@ import Dashboard from "./Dashboard";
 import Swipe from "./Swipe";
 import Login from "./Login";
 import SignUp from "./SignUp";
+import ForgotPassword from "./ForgotPassword";
+
 
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
@@ -17,6 +19,7 @@ function App() {
         <Route path="/homepage" element={<Homepage />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/dashboard/:userId" element={<Dashboard />} />
         <Route path="/swipe/:dogId" element={<Swipe />} />
       </Routes>
