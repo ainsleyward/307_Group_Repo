@@ -4,6 +4,7 @@ import pawIcon from "../assets/paw.png";
 import "../styles/Login.css";
 
 function Login() {
+
   return (
     <div className="login-page">
       {/* Top Navigation Bar */}
@@ -47,6 +48,7 @@ function Login() {
               Sign Up
             </Link>
           </div>
+          
         </form>
       </div>
     </div>
