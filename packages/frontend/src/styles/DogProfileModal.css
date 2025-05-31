@@ -107,26 +107,4 @@
   margin: 20px 0 8px;
 }
 
-/*responsiveness for mobile*/
-@media (max-width: 768px) {
-  .modal-body {
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-  }
-
-  .modal-dog-img {
-    width: 100%;
-    max-width: 360px;
-    height: auto;
-    margin-bottom: 24px;
-  }
-
-  .modal-dog-details {
-    width: 100%;
-  }
-}
-
-  
-
   

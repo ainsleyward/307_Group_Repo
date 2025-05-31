@@ -13,9 +13,9 @@ function Dashboard() {
 
   const [data, setData] = useState(null);
   const [error, setError] = useState("");
-  error; // to appease the ESLint gods (even with unused vars disabled it crashes :/ )
   const [showModal, setShowModal] = useState(false);
   const [selectedDog, setSelectedDog] = useState(null);
+  error; // to appease the ESLint gods (even with unused vars disabled it crashes :/ )
 
 
   useEffect(() => {
