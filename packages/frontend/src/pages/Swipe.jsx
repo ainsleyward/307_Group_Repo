@@ -19,12 +19,12 @@ function Swipe() {
   useEffect(() => {
     Promise.all([
       fetch(`${domain}/dogs`)
-      .then(res => res.json())
-      .catch((error) => console.error("error fetching dogs", error)),
+        .then((res) => res.json())
+        .catch((error) => console.error("error fetching dogs", error)),
 
       fetch(`${domain}/matches?swiperDogId=${dogId}`)
-      .then(res => res.json())
-      .catch((error) => console.error("error fetching matches:", error)),
+        .then((res) => res.json())
+        .catch((error) => console.error("error fetching matches:", error)),
     ])
       .then(([allDogs, matches]) => {
         const likedDogIds = new Set();
@@ -32,13 +32,12 @@ function Swipe() {
           likedDogIds.add(match.targetDogId);
         }
         const filtered = allDogs.filter(
-          (dog) => dog._id !== dogId && !likedDogIds.has(dog._id)
+          (dog) => dog._id !== dogId && !likedDogIds.has(dog._id),
         );
         setDogs(filtered);
       })
       .catch((error) => console.error("alternate error:", error));
   }, []);
-
 
   function next() {
     setTempIndex((prevIndex) => (prevIndex + 1) % dogs.length);
@@ -60,9 +59,8 @@ function Swipe() {
         console.log("Match:", data);
         if (data.isMutualMatch) {
           setShowMatchModal(true);
-        }
-        else {
-          setShowCornerPopup(true); 
+        } else {
+          setShowCornerPopup(true);
           setTimeout(() => setShowCornerPopup(false), popupTime);
         }
         next();
@@ -89,7 +87,7 @@ function Swipe() {
     <div className="swipe-container">
       <h1 className="title">Woofer</h1>
 
-      {showCornerPopup && (<div className="corner-popup"> Match sent! </div>)}
+      {showCornerPopup && <div className="corner-popup"> Match sent! </div>}
 
       {showMatchModal && (
         <div className="match-popup" onClick={() => setShowMatchModal(false)}>
@@ -136,7 +134,6 @@ function Swipe() {
           <p>{currentDog.bio}</p>
         </div>
         <div className="button-column">
-
           <button
             onClick={() => handleSubmit(currentDog)}
             className="icon-button"
@@ -178,4 +175,3 @@ function Swipe() {
 }
 
 export default Swipe;
-
