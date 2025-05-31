@@ -4,6 +4,7 @@ import Home from "./Home";
 import Homepage from "./Homepage";
 import Dashboard from "./Dashboard";
 import Swipe from "./Swipe";
+import CreateUserProfile from "./CreateUserProfile";
 import Login from "./Login";
 import SignUp from "./SignUp";
 
@@ -19,6 +20,7 @@ function App() {
         <Route path="/signup" element={<SignUp />} />
         <Route path="/dashboard/:userId" element={<Dashboard />} />
         <Route path="/swipe/:dogId" element={<Swipe />} />
+        <Route path="/profile/create" element={<CreateUserProfile />} />
       </Routes>
     </Router>
   );
