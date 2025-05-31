@@ -88,20 +88,56 @@ app.post("/dogs", async (req, res) => {
     .catch((err) => res.status(400).send(err.message)); //client-side error
 });
 
-app.post("/matches", (req, res) => {
-  const newMatch = new Match(req.body);
-  newMatch
-    .save()
-    .then((match) => res.status(201).json(match))
-    .catch((err) => res.status(400).send(err.message));
+app.post("/matches", async (req, res) => {
+  const { swiperDogId, targetDogId } = req.body;
+
+  if (!swiperDogId) {
+    return res.status(400).json({
+      error: "missing swiperDogId",
+    });
+  }
+
+  if (!targetDogId) {
+    return res.status(400).json({
+      error: "missing targetDogId",
+    });
+  }
+
+  try {
+    const newMatch = await Match.create({ swiperDogId, targetDogId });
+    const isMatch = await Match.findOne({
+      swiperDogId: targetDogId,
+      targetDogId: swiperDogId,
+    });
+    res.status(201).json({
+      matchId: newMatch._id,
+      isMutualMatch: Boolean(isMatch),
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "internal server error" });
+  }
+});
+
+app.get("/matches", async (req, res) => {
+  const { swiperDogId } = req.query;
+  if (!swiperDogId) {
+    return res.status(400).json({ error: "missing swiperDogId" });
+  }
+  try {
+    const matches = await Match.find({ swiperDogId });
+    res.status(200).json(matches);
+  } catch (err) {
+    res.status(500).json({ error: "error getting matches" });
+  }
 });
 
 app.delete("/dev/clear-matches", async (req, res) => {
   try {
     await Match.deleteMany({});
-    res.send("All matches deleted");
+    res.send("all matches deleted");
   } catch (err) {
-    res.status(500).send("Error deleting matches");
+    res.status(500).send({ error: "error deleting matches" });
   }
 });
 
