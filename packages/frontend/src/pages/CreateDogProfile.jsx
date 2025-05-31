@@ -1,6 +1,5 @@
 // src/pages/Form.jsx
-// upload to cloudinary using URL from previewURL, then get URL from cloudinary and
-// send that to the
+
 import React, { useState } from "react";
 import domain from "../domain";
 
@@ -25,14 +24,16 @@ function CreateDogProfile(props) {
     }));
   }
 
-  const handleFileSelect = async (e) => {
-    const file = e.target.files[0];
+  const handleFileSelect = async (event) => {
+    const file = event.target.files[0];
+
+    // enforce existance of a file
     if (!file) {
       console.log("No file selected");
       return;
     }
 
-    // discard previous picture
+    // discard previous picture if it exists
     if (dog.imgId != null) {
       fetch(`${domain}/upload/${encodeURIComponent(dog.imgId)}`, {
         method: "DELETE",
@@ -63,6 +64,7 @@ function CreateDogProfile(props) {
         body: uploadFormData,
       });
 
+      // error checking cloudinary's response
       if (!uploadResponse.ok) {
         const errorData = await uploadResponse.json();
         throw new Error(errorData.error);
@@ -85,7 +87,7 @@ function CreateDogProfile(props) {
   }
 
   function resetForm() {
-    setDog({ name: "", image: "", imgId: "", age: "", breed: "", bio: "" });
+    setDog({ name: "", image: "", imgId: null, age: "", breed: "", bio: "" });
     selectedFile = null;
     setPreviewUrl(null);
   }
