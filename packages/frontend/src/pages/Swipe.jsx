@@ -7,6 +7,10 @@ import domain from "../domain";
 
 console.log(domain);
 
+//testing branch 
+// npx prettier --write .
+// npx eslint . --fix
+
 const popupTime = 3000;
 
 function Swipe() {
