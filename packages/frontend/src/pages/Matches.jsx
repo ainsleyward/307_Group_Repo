@@ -26,16 +26,24 @@ function Matches() {
         .catch((error) => console.error("error fetching matches:", error)),
     ])
       .then(([allDogs, matches]) => {
+        console.log("matches:", matches);
         const dogsLiked = new Set();
         const likedBy = new Set();
         for (const match of matches) {
-            if (dogId === match.swipeDogId) {
-                dogsLiked.add(match.targetDogId);
+            console.log("s:", match.swiperDogId);
+            console.log("t:", match.targetDogId);
+            console.log("d:", dogId);
+            if (match.swiperDogId === dogId) {
+              console.log("+ dogsLiked:", match.targetDogId);
+              dogsLiked.add(match.targetDogId)
             }
-            if (dogId === match.targetDogId) {
-                likedBy.add(match.swipeDogId);
+            if (match.targetDogId === dogId) {
+              console.log("+ likedBy:", match.swiperDogId);
+              likedBy.add(match.swiperDogId)
             }
         }
+        console.log("dogsLiked:", dogsLiked);
+        console.log("likedby:", likedBy);
 
         const mutualMatches = []; 
         for (const dog of dogsLiked) {
@@ -44,6 +52,7 @@ function Matches() {
             }
         }
         const mutualSet = new Set(mutualMatches);
+        console.log("set:", mutualSet);
 
         const filtered = allDogs.filter(
           (dog) => dog._id !== dogId && mutualSet.has(dog._id),
@@ -78,6 +87,8 @@ function Matches() {
   return (
   <div className="matches-container">
     <h1 className="title">Matches</h1>
+    
+
   </div>);
 }
 

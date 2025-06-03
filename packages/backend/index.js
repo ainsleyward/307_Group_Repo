@@ -126,7 +126,7 @@ app.get("/matches", async (req, res) => {
       const matches = await Match.find();
       res.status(200).json(matches);
     } else {
-      const matches = await Match.find();
+      const matches = await Match.find({ swiperDogId });
       res.status(200).json(matches);
     }
   } catch (err) {
@@ -135,12 +135,9 @@ app.get("/matches", async (req, res) => {
 });
 
 app.get("/matches/all", async (req, res) => {
-  try {
-    const matches = await Match.find();
-    res.status(200).json(matches);
-  } catch (err) {
-    res.status(500).json({ error: "error getting all matches" });
-  }
+  Match.find({})
+    .then((matches) => res.send(matches))
+    .catch((err) => res.status(500).send(err.message));
 });
 
 app.delete("/dev/clear-matches", async (req, res) => {
