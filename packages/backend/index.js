@@ -132,6 +132,17 @@ app.get("/matches", async (req, res) => {
   }
 });
 
+app.post("/users", async (req, res) => {
+  const newUser = new User(req.body);
+
+  try {
+    const savedUser = await newUser.save();
+    res.status(201).json(savedUser);
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+});
+
 app.delete("/dev/clear-matches", async (req, res) => {
   try {
     await Match.deleteMany({});
