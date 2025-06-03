@@ -4,6 +4,7 @@ import Home from "./Home";
 import Homepage from "./Homepage";
 import Dashboard from "./Dashboard";
 import Swipe from "./Swipe";
+import Matches from "./Matches"
 import Login from "./Login";
 import SignUp from "./SignUp";
 import ForgotPassword from "./ForgotPassword";
@@ -22,6 +23,7 @@ function App() {
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/dashboard/:userId" element={<Dashboard />} />
         <Route path="/swipe/:dogId" element={<Swipe />} />
+        <Route path="/matches/:dogId" element={<Matches />} />
       </Routes>
     </Router>
   );

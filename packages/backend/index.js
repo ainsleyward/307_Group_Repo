@@ -121,14 +121,25 @@ app.post("/matches", async (req, res) => {
 
 app.get("/matches", async (req, res) => {
   const { swiperDogId } = req.query;
-  if (!swiperDogId) {
-    return res.status(400).json({ error: "missing swiperDogId" });
-  }
   try {
-    const matches = await Match.find({ swiperDogId });
-    res.status(200).json(matches);
+    if (!swiperDogId) {
+      const matches = await Match.find();
+      res.status(200).json(matches);
+    } else {
+      const matches = await Match.find();
+      res.status(200).json(matches);
+    }
   } catch (err) {
     res.status(500).json({ error: "error getting matches" });
+  }
+});
+
+app.get("/matches/all", async (req, res) => {
+  try {
+    const matches = await Match.find();
+    res.status(200).json(matches);
+  } catch (err) {
+    res.status(500).json({ error: "error getting all matches" });
   }
 });
 

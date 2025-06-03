@@ -1,0 +1,9 @@
+
+.matches-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: #e3d9f5;
+  font-family: "Fredoka", sans-serif;
+}
