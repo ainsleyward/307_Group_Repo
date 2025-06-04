@@ -150,10 +150,7 @@ function Swipe() {
           <p>
             <strong>Breed:</strong> {currentDog.breed}
           </p>
-          <img
-            src={currentDog.image}
-            alt={currentDog.name}
-            className="swipe-image"
+          <img src={currentDog.image} alt={currentDog.name} className="swipe-image" 
             onError={(e) => {
               e.target.onerror = null;
               e.target.src = "/images/default-dog.png";

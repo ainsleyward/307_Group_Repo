@@ -3,7 +3,76 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  padding: 2rem 1rem;
   background: #e3d9f5;
   font-family: "Fredoka", sans-serif;
+  min-height: 100vh;
+}
+
+.match-list {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem; /* space between cards */
+  width: 100%;
+  margin-top: 2rem;
+}
+
+.match-card {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start; /* where text is in the box;  */
+  background: white;
+  padding: 1.5rem;
+  border-radius: 16px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+  max-width: 800px;
+  gap: 1.5rem;
+  height: auto;
+}
+
+.match-image {
+  width: 160px;
+  height: 160px;
+  border-radius: 16px;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.match-info {
+  flex: 1;
+}
+
+.dog-name {
+  font-size: 1.8rem;
+  font-weight: bold;
+  margin: 0;
+}
+
+.dog-details {
+  font-size: 1rem;
+  color: #444;
+  margin: 0.4rem 0 0.8rem;
+}
+
+.tag-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.dog-tag {
+  background: #826997;
+  color: white;
+  padding: 0.3rem 0.75rem;
+  font-size: 0.85rem;
+  border-radius: 999px;
+}
+
+.dog-bio {
+  font-size: 1rem;
+  color: #333;
+  line-height: 1.5;
+  margin: 0;
 }

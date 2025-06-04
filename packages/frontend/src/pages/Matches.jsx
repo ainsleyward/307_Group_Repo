@@ -14,6 +14,7 @@ function Matches() {
   const [dogs, setDogs] = useState([]);
   console.log("dogs:", dogs);
   const [loading, setLoading] = useState(true);
+  const [currentDog, setCurrentDog] = useState(null);
 
   useEffect(() => {
     Promise.all([
@@ -29,6 +30,10 @@ function Matches() {
         console.log("matches:", matches);
         const dogsLiked = new Set();
         const likedBy = new Set();
+
+        const mainDog = allDogs.find((dog) => dog._id === dogId);
+        setCurrentDog(mainDog);
+
         for (const match of matches) {
             console.log("s:", match.swiperDogId);
             console.log("t:", match.targetDogId);
@@ -79,17 +84,43 @@ function Matches() {
     return (
       <div className="swipe-container">
         <h1 className="title">Matches</h1>
-        <p>NO MATCHES LOSER</p>
+        <p>No Matches</p>
       </div>
     );
   }
 
   return (
-  <div className="matches-container">
-    <h1 className="title">Matches</h1>
-    
+    <div className="matches-container">
+      <h1 className="title">{currentDog ? `Sniff out these matches, ${currentDog.name}!!` : "Matches"}</h1>
+      <div className="match-list">
+        {dogs.map((dog) => (
+          <div className="match-card">
+            <img src={dog.image} alt={dog.name} className="match-image" 
+              onError={(e) => {
+                e.target.onerror = null;
+                e.target.src = "/images/default-dog.png";
+              }}
+            />
 
-  </div>);
+            <div className="match-info">
+              <h2 className="dog-name">{dog.name}</h2>
+              <p className="dog-details">
+                {dog.breed}, Age: {dog.age}, Sex: {dog.gender || "N/A"}
+              </p>
+
+              <div className="tag-list">
+                {dog.tags && dog.tags.map((tag, i) => (
+                  <span key={i} className="dog-tag">{tag}</span>
+                ))}
+              </div>
+
+              <p className="dog-bio">{dog.bio}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
 }
 
 export default Matches;
