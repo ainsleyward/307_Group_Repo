@@ -1,5 +1,6 @@
 
 .matches-container {
+  margin-left: 100px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -7,6 +8,7 @@
   background: #e3d9f5;
   font-family: "Fredoka", sans-serif;
   min-height: 100vh;
+  flex: 1;
 }
 
 .match-list {
@@ -75,4 +77,71 @@
   color: #333;
   line-height: 1.5;
   margin: 0;
+}
+
+.dog-switcher {
+  position: fixed;
+  top: 1.5rem;
+  right: 1.5rem;
+  display: flex;
+  align-items: center;
+  background: transparent;
+  padding: 0.4rem 0.8rem;
+  border-radius: 999px;
+  box-shadow: none;
+  cursor: pointer;
+  z-index: 1000;
+}
+
+.chevron img {
+  width: 20px;
+  height: 20px;
+  margin-right: 4px;
+}
+
+.dog-name-label {
+  font-weight: bold;
+  font-size: 1rem;
+  margin-right: 0.5rem;
+}
+
+.dog-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid white;
+}
+
+.dog-dropdown {
+  position: absolute;
+  top: 60px;
+  right: 0;
+  background: white;
+  padding: 0.5rem 0;
+  margin: 0;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.15);
+  width: 140px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow: hidden;
+}
+
+.dog-dropdown li {
+  width: 100%;
+  text-align: center;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+}
+
+.dog-dropdown li:hover {
+  background-color: #f3e9fc;
+}
+
+.page-layout {
+  display: flex;
+  min-height: 100vh;
+  background: #e3d9f5; 
 }

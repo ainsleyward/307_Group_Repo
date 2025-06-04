@@ -23,7 +23,7 @@ function App() {
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/dashboard/:userId" element={<Dashboard />} />
         <Route path="/swipe/:dogId" element={<Swipe />} />
-        <Route path="/matches/:dogId" element={<Matches />} />
+        <Route path="/matches/:userId" element={<Matches />} />
       </Routes>
     </Router>
   );
