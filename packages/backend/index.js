@@ -12,6 +12,7 @@ import Participant from "./models/Participant.js";
 import Message from "./models/Message.js";
 import dashboardRoutes from "./routes/dashboard.js";
 import cloudinaryConfig from "./cloudinary.js";
+import { registerUser, loginUser, authenticateUser } from "./auth.js";
 const { cloudinary, upload } = cloudinaryConfig;
 
 dotenv.config();
@@ -51,7 +52,14 @@ app.get("/", (req, res) => {
   res.send("Hello World!");
 });
 
-app.use("/dashboard", dashboardRoutes);
+app.use("/dashboard", authenticateUser, dashboardRoutes);
+
+// Signup
+app.post("/signup", registerUser);
+
+// Login
+app.post("/login", loginUser);
+
 
 // GET dogs
 app.get("/dogs", (req, res) => {

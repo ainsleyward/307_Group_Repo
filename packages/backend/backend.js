@@ -1,6 +1,6 @@
 // need to update routes. Make one for dogs separately, and use new config of cloudinary and already existing post /dog
 // to upload image. NEED TO CHANGE DOG IMAGE SCHEMA TO INCLUDE PUBLIC ID.
-import express from "express";
+/*import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
@@ -8,8 +8,8 @@ import Dog from "./models/Dog.js";
 import Match from "./models/Match.js";
 import dashboardRoutes from "./routes/dashboard.js";
 import cloudinaryConfig from "./cloudinary.js";
-import { registerUser, loginUser, authenticateUser } from "./auth.js";
 const { cloudinary, upload } = cloudinaryConfig;
+import { registerUser, loginUser, authenticateUser } from "./auth.js";
 
 dotenv.config();
 
@@ -40,14 +40,12 @@ const corsOptions = {
   credentials: false,
 };*/
 //app.use(cors(corsOptions));
-app.use(express.json());
+/*app.use(express.json());
 app.use(cors());
 
 app.get("/", (req, res) => {
   res.send("Hello World!");
 });
-
-app.use("/dashboard", dashboardRoutes);
 
 // Signup
 app.post("/signup", registerUser);
@@ -117,4 +115,4 @@ app.use("/dashboard", authenticateUser, dashboardRoutes);
 
 app.listen(process.env.PORT || port, () => {
   console.log(`REST API is listening.`);
-});
+});*/
