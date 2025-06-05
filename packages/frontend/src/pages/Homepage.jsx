@@ -1,5 +1,5 @@
 //Home.jsx
-import React from "react";
+import React, { useEffect } from "react";
 import "../styles/Homepage.css";
 import { Link } from "react-router-dom";
 
@@ -8,6 +8,12 @@ import heartIcon from "../assets/heart-icon.png";
 import pawIcon from "../assets/paw.png";
 
 function Homepage() {
+
+  // remove session token if it exists
+  useEffect(() => {
+      localStorage.removeItem("token");
+    }, []);
+
   return (
     <div className="home-container">
       {/* Top Navigation Bar */}
