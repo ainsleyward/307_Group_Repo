@@ -13,7 +13,7 @@ function CreateUserProfile() {
     tags: [],
     bio: "",
     image: "",
-    imgId: ""
+    imgId: "",
   });
 
   const [selectedFile, setSelectedFile] = useState(null);
@@ -23,7 +23,7 @@ function CreateUserProfile() {
     const { name, value } = event.target;
     setUser((prevUser) => ({
       ...prevUser,
-      [name]: value
+      [name]: value,
     }));
   };
 
@@ -62,7 +62,7 @@ function CreateUserProfile() {
     try {
       const uploadResponse = await fetch("http://localhost:8000/upload", {
         method: "POST",
-        body: uploadFormData
+        body: uploadFormData,
       });
 
       const { imgUrl, publicId } = await uploadResponse.json();
@@ -70,13 +70,13 @@ function CreateUserProfile() {
       const fullUser = {
         ...user,
         image: imgUrl,
-        imgId: publicId
+        imgId: publicId,
       };
 
       const response = await fetch("http://localhost:8000/users", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(fullUser)
+        body: JSON.stringify(fullUser),
       });
 
       if (!response.ok) throw new Error("Error saving user");
@@ -100,7 +100,7 @@ function CreateUserProfile() {
       tags: [],
       bio: "",
       image: "",
-      imgId: ""
+      imgId: "",
     });
     setSelectedFile(null);
     setPreviewUrl(null);
@@ -110,23 +110,48 @@ function CreateUserProfile() {
     <form>
       <div className="name-fields">
         <div>
-            <label>First Name</label>
-            <input name="firstName" type="text" value={user.firstName} onChange={handleChange} />
+          <label>First Name</label>
+          <input
+            name="firstName"
+            type="text"
+            value={user.firstName}
+            onChange={handleChange}
+          />
         </div>
         <div>
-            <label>Last Name</label>
-            <input name="lastName" type="text" value={user.lastName} onChange={handleChange} />
+          <label>Last Name</label>
+          <input
+            name="lastName"
+            type="text"
+            value={user.lastName}
+            onChange={handleChange}
+          />
         </div>
       </div>
 
       <label>Email</label>
-      <input name="email" type="email" value={user.email} onChange={handleChange} />
+      <input
+        name="email"
+        type="email"
+        value={user.email}
+        onChange={handleChange}
+      />
 
       <label>Password</label>
-      <input name="password" type="password" value={user.password} onChange={handleChange} />
+      <input
+        name="password"
+        type="password"
+        value={user.password}
+        onChange={handleChange}
+      />
 
       <label>Age</label>
-      <input name="age" type="number" value={user.age} onChange={handleChange} />
+      <input
+        name="age"
+        type="number"
+        value={user.age}
+        onChange={handleChange}
+      />
 
       <label>Gender</label>
       <select name="gender" value={user.gender} onChange={handleChange}>
@@ -137,21 +162,28 @@ function CreateUserProfile() {
       </select>
 
       <label>City</label>
-      <input name="city" type="text" value={user.city} onChange={handleChange} />
+      <input
+        name="city"
+        type="text"
+        value={user.city}
+        onChange={handleChange}
+      />
 
       <label>Tags (Pick 3)</label>
       <div className="tags-group">
-      {["Runner", "Hiker", "Bookworm", "Cinephile", "Traveler", "Foodie"].map((tag) => (
-        <label key={tag}>
-          <input
-            type="checkbox"
-            value={tag}
-            checked={user.tags.includes(tag)}
-            onChange={handleTagChange}
-          />
-          {tag}
-        </label>
-      ))}
+        {["Runner", "Hiker", "Bookworm", "Cinephile", "Traveler", "Foodie"].map(
+          (tag) => (
+            <label key={tag}>
+              <input
+                type="checkbox"
+                value={tag}
+                checked={user.tags.includes(tag)}
+                onChange={handleTagChange}
+              />
+              {tag}
+            </label>
+          ),
+        )}
       </div>
 
       <label>Bio</label>
@@ -161,7 +193,9 @@ function CreateUserProfile() {
       <input type="file" accept="image/*" onChange={handleFileSelect} />
       {previewUrl && <img src={previewUrl} alt="Preview" width="200" />}
 
-      <button type="button" onClick={submitForm}>Submit</button>
+      <button type="button" onClick={submitForm}>
+        Submit
+      </button>
     </form>
   );
 }

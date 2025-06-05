@@ -17,7 +17,6 @@ function Dashboard() {
   const [selectedDog, setSelectedDog] = useState(null);
   error; // to appease the ESLint gods (even with unused vars disabled it crashes :/ )
 
-
   useEffect(() => {
     let url = `${domain}/dashboard/${userId}`;
     if (dogId) url += `?dogId=${dogId}`;
@@ -72,7 +71,7 @@ function Dashboard() {
             />
           </svg>
         </div>
-  
+
         <div className="dashboard-subheader">
           <h2>Pawfect pups for {currentDog.name}</h2>
           <div className="dog-dropdown">
@@ -97,7 +96,7 @@ function Dashboard() {
             />
           </div>
         </div>
-  
+
         <div className="standout-dogs">
           {matches.map((match) => (
             <div key={match._id} className="match-card">
@@ -133,7 +132,7 @@ function Dashboard() {
             </div>
           ))}
         </div>
-  
+
         <div className="dashboard-banner">
           <div className="banner-text">
             <p>
@@ -152,7 +151,7 @@ function Dashboard() {
           </div>
         </div>
       </div>
-  
+
       <DogProfileModal show={showModal} onClose={() => setShowModal(false)}>
         {selectedDog && (
           <div className="modal-body">
@@ -166,7 +165,9 @@ function Dashboard() {
               <p>{selectedDog.breed}</p>
               <div className="modal-tags">
                 {selectedDog.tags.map((tag, i) => (
-                  <span key={i} className="tag">{tag}</span>
+                  <span key={i} className="tag">
+                    {tag}
+                  </span>
                 ))}
               </div>
               <p className="modal-bio">{selectedDog.bio}</p>
@@ -176,6 +177,6 @@ function Dashboard() {
       </DogProfileModal>
     </div>
   );
-}  
+}
 
 export default Dashboard;

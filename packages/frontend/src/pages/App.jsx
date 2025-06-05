@@ -5,10 +5,10 @@ import Homepage from "./Homepage";
 import Dashboard from "./Dashboard";
 import Swipe from "./Swipe";
 import CreateUserProfile from "./CreateUserProfile";
+import Matches from "./Matches";
 import Login from "./Login";
 import SignUp from "./SignUp";
 import ForgotPassword from "./ForgotPassword";
-
 
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
@@ -22,8 +22,9 @@ function App() {
         <Route path="/signup" element={<SignUp />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/dashboard/:userId" element={<Dashboard />} />
-        <Route path="/swipe/:dogId" element={<Swipe />} />
+        <Route path="/swipe/:userId" element={<Swipe />} />
         <Route path="/profile/create" element={<CreateUserProfile />} />
+        <Route path="/matches/:userId" element={<Matches />} />
       </Routes>
     </Router>
   );

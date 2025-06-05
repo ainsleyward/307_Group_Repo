@@ -9,7 +9,6 @@ function SignUp() {
   const [errors, setErrors] = useState({});
   const [showPassword, setShowPassword] = useState(false);
 
-
   const handleSubmit = (e) => {
     e.preventDefault();
     let newErrors = {};
