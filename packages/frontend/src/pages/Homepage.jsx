@@ -8,11 +8,10 @@ import heartIcon from "../assets/heart-icon.png";
 import pawIcon from "../assets/paw.png";
 
 function Homepage() {
-
   // remove session token if it exists
   useEffect(() => {
-      localStorage.removeItem("token");
-    }, []);
+    localStorage.removeItem("token");
+  }, []);
 
   return (
     <div className="home-container">
