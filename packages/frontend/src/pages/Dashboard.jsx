@@ -21,7 +21,11 @@ function Dashboard() {
     let url = `${domain}/dashboard/${userId}`;
     if (dogId) url += `?dogId=${dogId}`;
 
-    fetch(url)
+    fetch(url, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    })
       .then((res) => {
         if (!res.ok) {
           return res.json().then((err) => {
@@ -30,8 +34,12 @@ function Dashboard() {
         }
         return res.json();
       })
-      .then((data) => setData(data))
-      .catch((err) => setError(err.message));
+      .then((data) => {
+        console.log("Fetched dashboard data:", data);
+        setData(data);
+      })
+      
+      .catch((err) => setError(err.message));    
   }, [userId, dogId]);
 
   if (!data) {
@@ -44,6 +52,26 @@ function Dashboard() {
       </div>
     );
   }
+
+  if (data.noDogs) {
+    return (
+      <div className="dashboard-container">
+        <Sidebar userId={userId} />
+        <div className="dashboard-main">
+          <div className="dashboard-header">
+            <h1>Welcome back, {data.userName}</h1>
+          </div>
+          <div className="no-dogs-message">
+            <p>🐾 No dogs added yet. Have your dog join the pack now!</p>
+            <Link to={`/add-dog/${userId}`} className="add-dog-cta">
+              Add a Dog
+            </Link>
+          </div>
+        </div>
+      </div>
+    );
+  }
+  
 
   const { userName, currentDog, matches } = data;
 
