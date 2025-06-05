@@ -23,14 +23,13 @@ function Login() {
         const data = await res.json();
         localStorage.setItem("token", data.token);
         navigate(`/dashboard/${data.userId}`);
-      } 
-      else {
+      } else {
         const text = await res.text();
         setError(text);
       }
-    } 
-    catch (err) {
+    } catch (err) {
       setError("Login failed. Please try again.");
+      console.log(err);
     }
   };
 
@@ -43,9 +42,15 @@ function Login() {
           <span className="brand-name">Woofer</span>
         </div>
         <div className="navbar-right">
-          <Link to="/" className="nav-link">Home</Link>
-          <Link to="/about" className="nav-link">About Us</Link>
-          <Link to="/blog" className="nav-link">Blog</Link>
+          <Link to="/" className="nav-link">
+            Home
+          </Link>
+          <Link to="/about" className="nav-link">
+            About Us
+          </Link>
+          <Link to="/blog" className="nav-link">
+            Blog
+          </Link>
         </div>
       </nav>
 
@@ -69,10 +74,16 @@ function Login() {
             onChange={(e) => setPassword(e.target.value)}
           />
           {error && <p className="error-text">{error}</p>}
-          <button type="submit" className="login-button">Login</button>
+          <button type="submit" className="login-button">
+            Login
+          </button>
           <div className="login-links">
-            <Link to="/forgot-password" className="forgot-link">Forgot Password?</Link>
-            <Link to="/signup" className="signup-link">Sign Up</Link>
+            <Link to="/signup" className="forgot-link">
+              Forgot Password?
+            </Link>
+            <Link to="/signup" className="signup-link">
+              Sign Up
+            </Link>
           </div>
         </form>
       </div>

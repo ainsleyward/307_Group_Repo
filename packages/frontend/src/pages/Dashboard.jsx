@@ -5,6 +5,7 @@ import "../styles/Dashboard.css";
 import Sidebar from "../components/Sidebar";
 import domain from "../domain";
 import DogProfileModal from "../components/DogProfileModal";
+import { Link } from "react-router-dom";
 
 function Dashboard() {
   const { userId } = useParams();
@@ -38,8 +39,8 @@ function Dashboard() {
         console.log("Fetched dashboard data:", data);
         setData(data);
       })
-      
-      .catch((err) => setError(err.message));    
+
+      .catch((err) => setError(err.message));
   }, [userId, dogId]);
 
   if (!data) {
@@ -71,7 +72,6 @@ function Dashboard() {
       </div>
     );
   }
-  
 
   const { userName, currentDog, matches } = data;
 
@@ -126,44 +126,43 @@ function Dashboard() {
         </div>
 
         <div className="standout-dogs">
-        {matches.map((match) => (
-          <div key={match._id} className="match-card">
-            <div className="image-wrapper">
-              <img
-                src={match.image}
-                alt={match.name}
-                className="match-image"
-                onError={(e) => {
-                  e.target.onerror = null;
-                  e.target.src = "/images/default-dog.png";
-                }}
-              />
-              <button
-                className="view-profile"
-                onClick={() => {
-                  setSelectedDog(match);
-                  setShowModal(true);
-                }}
-              >
-                View profile
-              </button>
-            </div>
-
-            <div className="match-info">
-              <div className="tags">
-                {match.tags.map((tag, i) => (
-                  <span key={i} className="tag">
-                    {tag}
-                  </span>
-                ))}
+          {matches.map((match) => (
+            <div key={match._id} className="match-card">
+              <div className="image-wrapper">
+                <img
+                  src={match.image}
+                  alt={match.name}
+                  className="match-image"
+                  onError={(e) => {
+                    e.target.onerror = null;
+                    e.target.src = "/images/default-dog.png";
+                  }}
+                />
+                <button
+                  className="view-profile"
+                  onClick={() => {
+                    setSelectedDog(match);
+                    setShowModal(true);
+                  }}
+                >
+                  View profile
+                </button>
               </div>
-              <h3>{match.name}</h3>
-              <p className="breed">{match.breed}</p>
-            </div>
-          </div>
-        ))}
-      </div>
 
+              <div className="match-info">
+                <div className="tags">
+                  {match.tags.map((tag, i) => (
+                    <span key={i} className="tag">
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+                <h3>{match.name}</h3>
+                <p className="breed">{match.breed}</p>
+              </div>
+            </div>
+          ))}
+        </div>
 
         <div className="dashboard-banner">
           <div className="banner-text">

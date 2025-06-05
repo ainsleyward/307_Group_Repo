@@ -16,7 +16,7 @@
   align-items: center;
   font-size: 2.5rem;
   font-weight: 700;
-  color: #5B496F;
+  color: #5b496f;
   gap: 1rem;
 }
 
@@ -59,7 +59,6 @@
 .dropdown-arrow {
   transform: rotate(0deg);
 }
-
 
 .standout-dogs {
   display: flex;
@@ -228,4 +227,3 @@ body,
 #root {
   height: 100%;
 }
-

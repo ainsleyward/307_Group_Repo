@@ -14,7 +14,7 @@ function SignUp() {
   });
 
   const [errors, setErrors] = useState({});
-  const [showPassword, setShowPassword] = useState(false);
+  //const [showPassword, setShowPassword] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -25,8 +25,10 @@ function SignUp() {
     e.preventDefault();
     let newErrors = {};
 
-    if (!formData.firstName.trim()) newErrors.firstName = "First name is required.";
-    if (!formData.lastName.trim()) newErrors.lastName = "Last name is required.";
+    if (!formData.firstName.trim())
+      newErrors.firstName = "First name is required.";
+    if (!formData.lastName.trim())
+      newErrors.lastName = "Last name is required.";
     if (!formData.email || !/\S+@\S+\.\S+/.test(formData.email)) {
       newErrors.email = "Valid email is required.";
     }
@@ -56,14 +58,13 @@ function SignUp() {
           const data = await res.json();
           localStorage.setItem("token", data.token);
           navigate(`/dashboard/${data.userId}`);
-        }
-        
-        else {
+        } else {
           const text = await res.text();
           setErrors({ api: text });
         }
       } catch (err) {
         setErrors({ api: "Network error. Please try again." });
+        console.log(err);
       }
     }
   };
@@ -76,9 +77,15 @@ function SignUp() {
           <h1 className="brand-name">Woofer</h1>
         </div>
         <div className="navbar-right">
-          <Link to="/" className="nav-link">Home</Link>
-          <Link to="/about" className="nav-link">About Us</Link>
-          <Link to="/blog" className="nav-link">Blog</Link>
+          <Link to="/" className="nav-link">
+            Home
+          </Link>
+          <Link to="/about" className="nav-link">
+            About Us
+          </Link>
+          <Link to="/blog" className="nav-link">
+            Blog
+          </Link>
         </div>
       </div>
 
@@ -86,27 +93,66 @@ function SignUp() {
         <h2 className="login-title">Join the Pack</h2>
         <p className="login-subtitle">Create your account below</p>
         <form className="login-form" onSubmit={handleSubmit}>
-          <input name="firstName" placeholder="First Name" value={formData.firstName} onChange={handleChange} className="login-input" />
+          <input
+            name="firstName"
+            placeholder="First Name"
+            value={formData.firstName}
+            onChange={handleChange}
+            className="login-input"
+          />
           {errors.firstName && <p className="error-text">{errors.firstName}</p>}
 
-          <input name="lastName" placeholder="Last Name" value={formData.lastName} onChange={handleChange} className="login-input" />
+          <input
+            name="lastName"
+            placeholder="Last Name"
+            value={formData.lastName}
+            onChange={handleChange}
+            className="login-input"
+          />
           {errors.lastName && <p className="error-text">{errors.lastName}</p>}
 
-          <input type="email" name="email" placeholder="Email" value={formData.email} onChange={handleChange} className="login-input" />
+          <input
+            type="email"
+            name="email"
+            placeholder="Email"
+            value={formData.email}
+            onChange={handleChange}
+            className="login-input"
+          />
           {errors.email && <p className="error-text">{errors.email}</p>}
 
-          <input type="password" name="password" placeholder="Password" value={formData.password} onChange={handleChange} className="login-input" />
+          <input
+            type="password"
+            name="password"
+            placeholder="Password"
+            value={formData.password}
+            onChange={handleChange}
+            className="login-input"
+          />
           {errors.password && <p className="error-text">{errors.password}</p>}
 
-          <input type="password" name="confirmPassword" placeholder="Confirm Password" value={formData.confirmPassword} onChange={handleChange} className="login-input" />
-          {errors.confirmPassword && <p className="error-text">{errors.confirmPassword}</p>}
+          <input
+            type="password"
+            name="confirmPassword"
+            placeholder="Confirm Password"
+            value={formData.confirmPassword}
+            onChange={handleChange}
+            className="login-input"
+          />
+          {errors.confirmPassword && (
+            <p className="error-text">{errors.confirmPassword}</p>
+          )}
 
-          <button type="submit" className="login-button">Sign Up</button>
+          <button type="submit" className="login-button">
+            Sign Up
+          </button>
 
           {errors.api && <p className="error-text">{errors.api}</p>}
 
           <div className="login-links">
-            <Link to="/login" className="signup-link">Already have an account? Login</Link>
+            <Link to="/login" className="signup-link">
+              Already have an account? Login
+            </Link>
           </div>
         </form>
       </div>

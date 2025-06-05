@@ -106,7 +106,7 @@ function Swipe() {
         const likedIds = new Set(matches.map((m) => m.targetDogId));
         const ownerDogIds = new Set(userDogs.map((d) => d._id));
         const available = allDogs.filter(
-          (dog) => !ownerDogIds.has(dog._id) && !likedIds.has(dog._id)
+          (dog) => !ownerDogIds.has(dog._id) && !likedIds.has(dog._id),
         );
         setAvailableDogs(available);
         setTempIndex(0);

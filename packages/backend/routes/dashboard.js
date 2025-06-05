@@ -2,7 +2,7 @@
 import express from "express";
 import User from "../models/User.js";
 import Dog from "../models/Dog.js";
-import { authenticateUser } from "../auth.js"
+import { authenticateUser } from "../auth.js";
 
 const router = express.Router();
 

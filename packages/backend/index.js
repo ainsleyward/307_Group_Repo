@@ -60,7 +60,6 @@ app.post("/signup", registerUser);
 // Login
 app.post("/login", loginUser);
 
-
 // GET dogs
 app.get("/dogs", (req, res) => {
   Dog.find({})

@@ -45,7 +45,6 @@ export function registerUser(req, res) {
   });
 }
 
-
 function generateAccessToken(username) {
   return new Promise((resolve, reject) => {
     jwt.sign(
@@ -86,23 +85,28 @@ export function authenticateUser(req, res, next) {
 export function loginUser(req, res) {
   const { email, password } = req.body;
 
-  User.findOne({ email }).then((user) => {
-    if (!user) {
-      return res.status(401).send("Unauthorized");
-    }
-
-    bcrypt.compare(password, user.password).then((matched) => {
-      if (!matched) {
+  User.findOne({ email })
+    .then((user) => {
+      if (!user) {
         return res.status(401).send("Unauthorized");
       }
 
-      generateAccessToken(user._id).then((token) => {
-        res.status(200).send({ token, userId: user._id });
-      });
-    }).catch(() => {
+      bcrypt
+        .compare(password, user.password)
+        .then((matched) => {
+          if (!matched) {
+            return res.status(401).send("Unauthorized");
+          }
+
+          generateAccessToken(user._id).then((token) => {
+            res.status(200).send({ token, userId: user._id });
+          });
+        })
+        .catch(() => {
+          res.status(500).send("Server error");
+        });
+    })
+    .catch(() => {
       res.status(500).send("Server error");
     });
-  }).catch(() => {
-    res.status(500).send("Server error");
-  });
 }
