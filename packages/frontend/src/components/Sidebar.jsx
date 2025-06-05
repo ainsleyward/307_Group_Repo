@@ -224,7 +224,7 @@ function Sidebar({ userId }) {
         />
       </svg>
 
-      <Link to={`/find?userId=${userId}`}>Find pups</Link>
+      <Link to={`/swipe/${userId}`}>Find pups</Link>
       <svg
         width="41"
         height="41"
@@ -283,7 +283,7 @@ function Sidebar({ userId }) {
         />
       </svg>
 
-      <Link to={`/mates?userId=${userId}`}>Mates</Link>
+      <Link to={`/matches/${userId}`}>Mates</Link>
       <svg
         width="37"
         height="40"
@@ -296,7 +296,7 @@ function Sidebar({ userId }) {
         <rect y="33" width="37" height="7" fill="white" />
       </svg>
 
-      <Link to={`/profile?userId=${userId}`}>Profile</Link>
+      <Link to={`/profile/${userId}`}>Profile</Link>
       <Link to="/">Log out</Link>
     </div>
   );
