@@ -23,7 +23,7 @@ function App() {
         <Route path="/signup" element={<SignUp />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/dashboard/:userId" element={<Dashboard />} />
-        <Route path="/swipe/:dogId" element={<Swipe />} />
+        <Route path="/swipe/:userId" element={<Swipe />} />
         <Route path="/profile/create" element={<CreateUserProfile />} />
         <Route path="/matches/:userId" element={<Matches />} />
       </Routes>

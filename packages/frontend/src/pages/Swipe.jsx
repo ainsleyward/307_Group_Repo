@@ -4,6 +4,7 @@ import "../styles/Home.css";
 import "../styles/Swipe.css";
 import { useParams } from "react-router-dom";
 import domain from "../domain";
+import downIcon from "../assets/down-icon.png";
 
 console.log(domain);
 
@@ -54,37 +55,51 @@ const PawIcon = (
 );
 
 function Swipe() {
-  const { dogId } = useParams();
-  const [dogs, setDogs] = useState([]);
+  const { userId } = useParams();
+  console.log("userId from URL:", userId);
+  const [userDogs, setUserDogs] = useState([]);
+  const [dogId, setDogId] = useState(null);
+  const [currentDog, setCurrentDog] = useState(null);
+  const [allDogs, setAllDogs] = useState([]);
+  const [availableDogs, setAvailableDogs] = useState([]);
   const [tempIndex, setTempIndex] = useState(0);
   const [showCornerPopup, setShowCornerPopup] = useState(false);
   const [showMatchModal, setShowMatchModal] = useState(false);
+  const [showDropdown, setShowDropdown] = useState(false);
 
   useEffect(() => {
-    Promise.all([
-      fetch(`${domain}/dogs`)
-        .then((res) => res.json())
-        .catch((error) => console.error("error fetching dogs", error)),
-
-      fetch(`${domain}/matches?swiperDogId=${dogId}`)
-        .then((res) => res.json())
-        .catch((error) => console.error("error fetching matches:", error)),
-    ])
-      .then(([allDogs, matches]) => {
-        const likedDogIds = new Set();
-        for (const match of matches) {
-          likedDogIds.add(match.targetDogId);
+    fetch(`${domain}/dogs`)
+      .then((res) => res.json())
+      .then((dogs) => {
+        setAllDogs(dogs);
+        const ownersDogs = dogs.filter((d) => d.owner === userId);
+        setUserDogs(ownersDogs);
+        if (ownersDogs.length > 0) {
+          setDogId(ownersDogs[0]._id);
+          setCurrentDog(ownersDogs[0]);
         }
-        const filtered = allDogs.filter(
-          (dog) => dog._id !== dogId && !likedDogIds.has(dog._id),
-        );
-        setDogs(filtered);
       })
-      .catch((error) => console.error("alternate error:", error));
-  }, []);
+      .catch((err) => console.error("error fetching dogs:", err));
+  }, [userId]);
+
+  useEffect(() => {
+    if (!dogId || allDogs.length === 0) return;
+
+    fetch(`${domain}/matches?swiperDogId=${dogId}`)
+      .then((res) => res.json())
+      .then((matches) => {
+        const likedIds = new Set(matches.map((m) => m.targetDogId));
+        const available = allDogs.filter(
+          (dog) => dog._id !== dogId && !likedIds.has(dog._id)
+        );
+        setAvailableDogs(available);
+        setTempIndex(0);
+      })
+      .catch((err) => console.error("error fetching matches:", err));
+  }, [dogId, allDogs]);
 
   function next() {
-    setTempIndex((prevIndex) => (prevIndex + 1) % dogs.length);
+    setTempIndex((prevIndex) => (prevIndex + 1) % availableDogs.length);
   }
 
   function handleSubmit(targetDog) {
@@ -112,13 +127,23 @@ function Swipe() {
       .catch((error) => console.error(error));
   }
 
-  const currentDog = dogs[tempIndex];
+  const dogOnPage = availableDogs[tempIndex];
+  if (!dogOnPage) {
+    return (
+      <div className="swipe-container">
+        <h1 className="title">Woofer</h1>
+        <p>No more dogs to swipe on.</p>
+      </div>
+    );
+  }
+  console.log("dogOnPage:", dogOnPage);
+
 
   if (!dogId) {
     return <p>Error: No swiping dog ID provided.</p>;
   }
 
-  if (dogs.length === 0) {
+  if (allDogs.length === 0) {
     return (
       <div className="swipe-container">
         <h1 className="title">Woofer</h1>
@@ -130,6 +155,30 @@ function Swipe() {
   return (
     <div className="swipe-container">
       <h1 className="title">Woofer</h1>
+      {userDogs.length > 1 && currentDog && (
+                <div className="dog-switcher" onClick={() => setShowDropdown(!showDropdown)}>
+                  <span className="chevron"><img src={downIcon} alt="⌄" /></span>
+                  <span className="dog-name-label">{currentDog.name}</span>
+                  <img src={currentDog.image} alt={currentDog.name} className="dog-avatar" />
+                  
+                  {showDropdown && (
+                    <ul className="dog-dropdown">
+                      {userDogs.map((dog) => (
+                        <li
+                          key={dog._id}
+                          onClick={() => {
+                            setDogId(dog._id);
+                            setCurrentDog(dog);
+                            setShowDropdown(false);
+                          }}
+                        >
+                          {dog.name}
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </div>
+              )}
 
       {showCornerPopup && <div className="corner-popup"> Match sent! </div>}
 
@@ -146,21 +195,21 @@ function Swipe() {
           </button>
         </div>
         <div>
-          <h2 className="swipe-h2">{currentDog.name}</h2>
+          <h2 className="swipe-h2">{dogOnPage.name}</h2>
           <p>
-            <strong>Breed:</strong> {currentDog.breed}
+            <strong>Breed:</strong> {dogOnPage.breed}
           </p>
-          <img src={currentDog.image} alt={currentDog.name} className="swipe-image" 
+          <img src={dogOnPage.image} alt={dogOnPage.name} className="swipe-image" 
             onError={(e) => {
               e.target.onerror = null;
               e.target.src = "/images/default-dog.png";
             }}
           />
-          <p>{currentDog.bio}</p>
+          <p>{dogOnPage.bio}</p>
         </div>
         <div className="button-column">
           <button
-            onClick={() => handleSubmit(currentDog)}
+            onClick={() => handleSubmit(dogOnPage)}
             className="icon-button"
           >
             {PawIcon}

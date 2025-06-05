@@ -90,6 +90,7 @@ function Matches() {
       })
       .catch((error) => console.error("alternate error:", error));
   }, []);
+  
 
 useEffect(() => {
   if (!dogId || matches.length === 0 || allDogs.length === 0) return;
