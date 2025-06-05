@@ -36,22 +36,17 @@
 .dog-dropdown {
   display: flex;
   align-items: center;
-  gap: 0.6rem;
-  background: transparent;
-  border-radius: 9999px;
-  padding: 0.4rem 0.8rem;
-  cursor: pointer;
-}
-
-.dropdown-arrow {
-  width: 20px;
-  height: 20px;
+  gap: 0.75rem; /* space between arrow, name, and image */
+  background-color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 1.5rem;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
 }
 
 .dog-name {
   font-size: 1.5rem;
-  font-weight: 500;
-  color: #000;
+  font-weight: 600;
+  margin: 0;
 }
 
 .dog-profile-pic {
@@ -59,79 +54,80 @@
   height: 60px;
   border-radius: 50%;
   object-fit: cover;
-  border: 2px solid white;
 }
 
+.dropdown-arrow {
+  transform: rotate(0deg);
+}
+
+
 .standout-dogs {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-  gap: 2rem;
-  margin-top: 2rem;
+  display: flex;
+  overflow-x: auto;
+  gap: 3rem;
 }
 
 .match-card {
-  background: transparent;
+  background: white;
   border-radius: 1rem;
-  padding: 0;
+  padding: 1rem;
   width: 100%;
-  height: 475px;
   text-align: left;
-  position: relative;
   display: flex;
   flex-direction: column;
-  font-family: "Fredoka", sans-serif;
+  justify-content: flex-start;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
 .match-image {
   width: 100%;
-  height: 475px;
+  height: 240px;
   object-fit: cover;
   border-radius: 1rem;
-  position: relative;
 }
 
 .view-profile {
   position: absolute;
-  bottom: 10px;
-  left: 10px;
+  bottom: 8px;
+  left: 8px;
   background-color: white;
   color: #5b4970;
   border: 2px solid #5b4970;
   padding: 0.3rem 0.9rem;
   border-radius: 50px;
-  font-size: 1.5rem;
+  font-size: 1rem;
   font-weight: 500;
   cursor: pointer;
-  font-family: "Fredoka", sans-serif;
+  z-index: 2;
 }
 
 .tags {
   display: flex;
-  flex-wrap: nowrap;
+  flex-wrap: wrap;
   gap: 0.4rem;
-  margin: 1rem 1rem 0.5rem 0;
+  margin-top: 0.8rem;
 }
 
 .tag {
   background-color: #826997;
   color: white;
-  padding: 0.5rem 1rem;
+  padding: 0.4rem 0.8rem;
   border-radius: 1rem;
-  font-size: 1rem;
+  font-size: 0.85rem;
   font-weight: 500;
 }
 
 .match-card h3 {
   margin: 0.4rem 0 0.1rem;
-  font-size: 1.5rem;
-  font-weight: 700;
+  font-size: 1.4rem;
+  font-weight: 600;
   color: black;
 }
 
 .breed {
   font-size: 1rem;
   color: #555;
-  margin-bottom: 0.5rem;
+  margin: 0;
 }
 
 .dashboard-banner {
@@ -189,27 +185,6 @@
   cursor: pointer;
 }
 
-/* --- Responsive Fix --- */
-@media (max-width: 768px) {
-  .standout-dogs {
-    grid-template-columns: 1fr;
-  }
-
-  .dashboard-banner {
-    grid-template-columns: 1fr;
-    text-align: center;
-  }
-
-  .banner-text {
-    font-size: 1.5rem;
-    padding: 1.5rem;
-  }
-
-  .cta-image {
-    width: 100%;
-  }
-}
-
 .image-wrapper {
   position: relative;
   width: 100%;
@@ -253,3 +228,4 @@ body,
 #root {
   height: 100%;
 }
+

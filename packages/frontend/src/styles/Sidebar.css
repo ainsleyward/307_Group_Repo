@@ -10,7 +10,9 @@
   align-items: center;
   gap: 1rem;
   position: fixed;
+  top: 0;
 }
+
 
 .sidebar svg:first-child {
   margin-bottom: 7rem;
