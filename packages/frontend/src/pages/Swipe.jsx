@@ -10,7 +10,7 @@ import "../styles/Dashboard.css";
 
 console.log(domain);
 
-//testing branch 
+//testing branch
 // npx prettier --write .
 // npx eslint . --fix
 
@@ -18,10 +18,16 @@ const popupTime = 3000;
 
 // icons
 const XIcon = (
-  <svg width="176" height="175" viewBox="0 0 176 175" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <ellipse cx="88" cy="87.5" rx="88" ry="87.5" fill="#826997"/>
-    <path 
-      d="M122.629 142.369L35.6226 54.1729L56.1566 32.8672L143.024 119.013L122.629 142.369Z" 
+  <svg
+    width="176"
+    height="175"
+    viewBox="0 0 176 175"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <ellipse cx="88" cy="87.5" rx="88" ry="87.5" fill="#826997" />
+    <path
+      d="M122.629 142.369L35.6226 54.1729L56.1566 32.8672L143.024 119.013L122.629 142.369Z"
       fill="white"
     />
     <path
@@ -31,7 +37,13 @@ const XIcon = (
   </svg>
 );
 const PawIcon = (
-  <svg width="175" height="175" viewBox="0 0 175 175" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <svg
+    width="175"
+    height="175"
+    viewBox="0 0 175 175"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
     <circle cx="87.5" cy="87.5" r="87.5" fill="#826997" />
     <path
       d="M125.839 103.529C95.5767 73.5426 62.5635 96.7138 45.3691 112.388C37.8036 122.611 51.5591 135.559 63.2513 136.922C74.9434 138.285 78.3823 121.248 85.2601 119.885C92.1378 118.522 98.3278 123.974 109.332 129.426C120.337 134.878 156.101 133.515 125.839 103.529Z"
@@ -93,7 +105,7 @@ function Swipe() {
       .then((matches) => {
         const likedIds = new Set(matches.map((m) => m.targetDogId));
         const available = allDogs.filter(
-          (dog) => dog._id !== dogId && !likedIds.has(dog._id)
+          (dog) => dog._id !== dogId && !likedIds.has(dog._id),
         );
         setAvailableDogs(available);
         setTempIndex(0);
@@ -142,7 +154,6 @@ function Swipe() {
   }
   console.log("dogOnPage:", dogOnPage);
 
-
   if (!dogId) {
     return <p>Error: No swiping dog ID provided.</p>;
   }
@@ -157,72 +168,92 @@ function Swipe() {
   }
 
   return (
-  <div className="page-layout">
-    <Sidebar userId={userId} />
-    <div className="swipe-container">
-      {userDogs.length > 1 && currentDog && (
-                <div className="dog-switcher" onClick={() => setShowDropdown(!showDropdown)}>
-                  <span className="chevron"><img src={downIcon} alt="⌄" /></span>
-                  <span className="dog-name-label">{currentDog.name}</span>
-                  <img src={currentDog.image} alt={currentDog.name} className="dog-avatar" />
-                  
-                  {showDropdown && (
-                    <ul className="dog-dropdown">
-                      {userDogs.map((dog) => (
-                        <li
-                          key={dog._id}
-                          onClick={() => {
-                            setDogId(dog._id);
-                            setCurrentDog(dog);
-                            setShowDropdown(false);
-                          }}
-                        >
-                          {dog.name}
-                        </li>
-                      ))}
-                    </ul>
-                  )}
-                </div>
-              )}
-
-      {showCornerPopup && <div className="corner-popup"> Match sent! </div>}
-
-      {showMatchModal && (
-        <div className="match-popup" onClick={() => setShowMatchModal(false)}>
-          <div className="match-popup-info">
-            <p>IT'S A MATCH!!</p>
-            <img src={matchedDog.image} alt={matchedDog.name} className="match-image" />
-            <p className="match-text">You matched with <strong>{matchedDog.name}</strong>!</p>
-          </div>
-        </div>
-      )}
-
-      <div className="three-columns-grid">
-        <div className="button-column">
-          <button onClick={next} className="icon-button">{XIcon}</button>
-        </div>
-      <div className="swipe-card">
-          <h2 className="swipe-h2">{dogOnPage.name}</h2>
-          <h2 className="swipe-breed">{dogOnPage.breed}</h2>
-          <img src={dogOnPage.image} alt={dogOnPage.name} className="swipe-image" 
-            onError={(e) => {
-              e.target.onerror = null;
-              e.target.src = "/images/default-dog.png";
-            }}
-          />
-          <p className="swipe-bio">{dogOnPage.bio}</p>
-        </div>
-        <div className="button-column">
-          <button
-            onClick={() => handleSubmit(dogOnPage)}
-            className="icon-button"
+    <div className="page-layout">
+      <Sidebar userId={userId} />
+      <div className="swipe-container">
+        {userDogs.length > 1 && currentDog && (
+          <div
+            className="dog-switcher"
+            onClick={() => setShowDropdown(!showDropdown)}
           >
-            {PawIcon}
-          </button>
+            <span className="chevron">
+              <img src={downIcon} alt="⌄" />
+            </span>
+            <span className="dog-name-label">{currentDog.name}</span>
+            <img
+              src={currentDog.image}
+              alt={currentDog.name}
+              className="dog-avatar"
+            />
+
+            {showDropdown && (
+              <ul className="dog-dropdown">
+                {userDogs.map((dog) => (
+                  <li
+                    key={dog._id}
+                    onClick={() => {
+                      setDogId(dog._id);
+                      setCurrentDog(dog);
+                      setShowDropdown(false);
+                    }}
+                  >
+                    {dog.name}
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
+        )}
+
+        {showCornerPopup && <div className="corner-popup"> Match sent! </div>}
+
+        {showMatchModal && (
+          <div className="match-popup" onClick={() => setShowMatchModal(false)}>
+            <div className="match-popup-info">
+              <p>IT'S A MATCH!!</p>
+              <img
+                src={matchedDog.image}
+                alt={matchedDog.name}
+                className="match-image"
+              />
+              <p className="match-text">
+                You matched with <strong>{matchedDog.name}</strong>!
+              </p>
+            </div>
+          </div>
+        )}
+
+        <div className="three-columns-grid">
+          <div className="button-column">
+            <button onClick={next} className="icon-button">
+              {XIcon}
+            </button>
+          </div>
+          <div className="swipe-card">
+            <h2 className="swipe-h2">{dogOnPage.name}</h2>
+            <h2 className="swipe-breed">{dogOnPage.breed}</h2>
+            <img
+              src={dogOnPage.image}
+              alt={dogOnPage.name}
+              className="swipe-image"
+              onError={(e) => {
+                e.target.onerror = null;
+                e.target.src = "/images/default-dog.png";
+              }}
+            />
+            <p className="swipe-bio">{dogOnPage.bio}</p>
+          </div>
+          <div className="button-column">
+            <button
+              onClick={() => handleSubmit(dogOnPage)}
+              className="icon-button"
+            >
+              {PawIcon}
+            </button>
+          </div>
         </div>
       </div>
     </div>
-  </div>
   );
 }
 

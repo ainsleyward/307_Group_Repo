@@ -41,48 +41,47 @@ function Matches() {
       .then(([allDogs, matchinfo]) => {
         setAllDogs(allDogs);
         console.log("allDogs:", allDogs);
-        setMatches(matchinfo)
+        setMatches(matchinfo);
         console.log("matches:", matchinfo);
 
-        const ownersDogs = allDogs.filter(dog => dog.owner === userId);
+        const ownersDogs = allDogs.filter((dog) => dog.owner === userId);
         setUserDogs(ownersDogs);
         console.log("userDogs:", ownersDogs);
 
         if (ownersDogs.length > 0) {
           setDogId(ownersDogs[0]._id);
           setCurrentDog(ownersDogs[0]);
-        }
-        else {
+        } else {
           console.log("This user has no dogs.");
-          setLoading(false); 
+          setLoading(false);
           return;
         }
-        
+
         const dogsLiked = new Set();
         const likedBy = new Set();
         const tempId = ownersDogs[0]._id;
 
         for (const match of matches) {
-            //console.log("s:", match.swiperDogId);
-            //console.log("t:", match.targetDogId);
-            //console.log("d:", dogId);
-            if (match.swiperDogId === tempId) {
-              console.log("+ dogsLiked:", match.targetDogId);
-              dogsLiked.add(match.targetDogId)
-            }
-            if (match.targetDogId === tempId) {
-              console.log("+ likedBy:", match.swiperDogId);
-              likedBy.add(match.swiperDogId)
-            }
+          //console.log("s:", match.swiperDogId);
+          //console.log("t:", match.targetDogId);
+          //console.log("d:", dogId);
+          if (match.swiperDogId === tempId) {
+            console.log("+ dogsLiked:", match.targetDogId);
+            dogsLiked.add(match.targetDogId);
+          }
+          if (match.targetDogId === tempId) {
+            console.log("+ likedBy:", match.swiperDogId);
+            likedBy.add(match.swiperDogId);
+          }
         }
         console.log("dogsLiked:", dogsLiked);
         console.log("likedby:", likedBy);
 
-        const mutualMatches = []; 
+        const mutualMatches = [];
         for (const dog of dogsLiked) {
-            if (likedBy.has(dog)) {
-                mutualMatches.push(dog);
-            }
+          if (likedBy.has(dog)) {
+            mutualMatches.push(dog);
+          }
         }
         const mutualSet = new Set(mutualMatches);
         console.log("set:", mutualSet);
@@ -95,73 +94,71 @@ function Matches() {
       })
       .catch((error) => console.error("alternate error:", error));
   }, []);
-  
 
-useEffect(() => {
-  if (!dogId || matches.length === 0 || allDogs.length === 0) return;
+  useEffect(() => {
+    if (!dogId || matches.length === 0 || allDogs.length === 0) return;
 
-  console.log("Changing matches for new dogId:", dogId);
+    console.log("Changing matches for new dogId:", dogId);
 
-  const dogsLiked = new Set();
-  const likedBy = new Set();
+    const dogsLiked = new Set();
+    const likedBy = new Set();
 
-  for (const match of matches) {
-    if (match.swiperDogId === dogId) {
-      dogsLiked.add(match.targetDogId);
+    for (const match of matches) {
+      if (match.swiperDogId === dogId) {
+        dogsLiked.add(match.targetDogId);
+      }
+      if (match.targetDogId === dogId) {
+        likedBy.add(match.swiperDogId);
+      }
     }
-    if (match.targetDogId === dogId) {
-      likedBy.add(match.swiperDogId);
+
+    console.log("dogsLiked:", dogsLiked);
+    console.log("likedBy:", likedBy);
+
+    const mutualMatches = [];
+
+    for (const id of dogsLiked) {
+      if (likedBy.has(id)) {
+        mutualMatches.push(id);
+      }
     }
-  }
 
-  console.log("dogsLiked:", dogsLiked);
-  console.log("likedBy:", likedBy);
+    const mutualSet = new Set(mutualMatches);
+    console.log("mutualSet:", mutualSet);
 
-  const mutualMatches = [];
+    const filtered = allDogs.filter(
+      (dog) => dog._id !== dogId && mutualSet.has(dog._id),
+    );
 
-  for (const id of dogsLiked) {
-    if (likedBy.has(id)) {
-      mutualMatches.push(id);
-    }
-  }
+    console.log("Matched dogs:", filtered);
+    setMatchedDogs(filtered);
+  }, [dogId, matches, allDogs]);
 
-  const mutualSet = new Set(mutualMatches);
-  console.log("mutualSet:", mutualSet);
+  useEffect(() => {
+    if (!dogId) return;
 
-  const filtered = allDogs.filter(
-    (dog) => dog._id !== dogId && mutualSet.has(dog._id)
-  );
+    fetch(`/api/convos?dogId=${dogId}`)
+      .then((res) => res.json())
+      .then((data) => {
+        console.log("Fetched conversations:", data);
+      })
+      .catch((err) => {
+        console.error("error getting convos:", err);
+      });
+  }, [dogId]);
 
-  console.log("Matched dogs:", filtered);
-  setMatchedDogs(filtered);
-}, [dogId, matches, allDogs]);
+  useEffect(() => {
+    if (!currConvoId) return;
 
-useEffect(() => {
-  if (!dogId) return;
-
-  fetch(`/api/convos?dogId=${dogId}`)
-    .then((res) => res.json())
-    .then((data) => {
-      console.log("Fetched conversations:", data);
-    })
-    .catch((err) => {
-      console.error("error getting convos:", err);
-    });
-}, [dogId]);
-
-useEffect(() => {
-  if (!currConvoId) return;
-
-  fetch(`${domain}/messages?convoId=${currConvoId}`)
-    .then((res) => res.json())
-    .then((data) => {
-      setMessages(data);
-    })
-    .catch((err) => {
-      console.error("error getting messages:", err);
-    });
-}, [currConvoId]);
-
+    fetch(`${domain}/messages?convoId=${currConvoId}`)
+      .then((res) => res.json())
+      .then((data) => {
+        setMessages(data);
+      })
+      .catch((err) => {
+        console.error("error getting messages:", err);
+      });
+  }, [currConvoId]);
 
   if (!dogId && !loading) {
     return (
@@ -173,10 +170,10 @@ useEffect(() => {
   }
   if (loading) {
     return (
-    <div className="swipe-container">
-      <h1 className="title">Matches</h1>
-      <p>Loading Matches...</p>
-    </div>
+      <div className="swipe-container">
+        <h1 className="title">Matches</h1>
+        <p>Loading Matches...</p>
+      </div>
     );
   }
 
@@ -188,7 +185,6 @@ useEffect(() => {
       </div>
     );
   }
-  
 
   return (
     <div className="page-layout">
@@ -196,11 +192,20 @@ useEffect(() => {
 
       <div className="matches-container">
         {userDogs.length > 1 && currentDog && (
-          <div className="dog-switcher" onClick={() => setShowDropdown(!showDropdown)}>
-            <span className="chevron"><img src={downIcon} alt="⌄" /></span>
+          <div
+            className="dog-switcher"
+            onClick={() => setShowDropdown(!showDropdown)}
+          >
+            <span className="chevron">
+              <img src={downIcon} alt="⌄" />
+            </span>
             <span className="dog-name-label">{currentDog.name}</span>
-            <img src={currentDog.image} alt={currentDog.name} className="dog-avatar" />
-            
+            <img
+              src={currentDog.image}
+              alt={currentDog.name}
+              className="dog-avatar"
+            />
+
             {showDropdown && (
               <ul className="dog-dropdown">
                 {userDogs.map((dog) => (
@@ -223,11 +228,19 @@ useEffect(() => {
         {showChatPopup && currChatDog && (
           <div className="chat-popup">
             <div className="chat-popup-inner">
-              <button className="close-chat" onClick={() => setShowChatPopup(false)}>×</button>
+              <button
+                className="close-chat"
+                onClick={() => setShowChatPopup(false)}
+              >
+                ×
+              </button>
               <h2 className="chat-header">Chat with {currChatDog.name}</h2>
               <div className="chat-messages">
                 {messages.map((msg) => {
-                  const sender = msg.participantId === dogId ? currentDog.name : currChatDog.name;
+                  const sender =
+                    msg.participantId === dogId
+                      ? currentDog.name
+                      : currChatDog.name;
                   return (
                     <div key={msg._id} className="chat-message">
                       <strong>{sender}:</strong> {msg.text}
@@ -268,11 +281,18 @@ useEffect(() => {
           </div>
         )}
 
-        <h1 className="match-title">{currentDog ? `Sniff out these matches, ${currentDog.name}!!` : "Matches"}</h1>
+        <h1 className="match-title">
+          {currentDog
+            ? `Sniff out these matches, ${currentDog.name}!!`
+            : "Matches"}
+        </h1>
         <div className="match-list">
           {matchedDogs.map((dog) => (
-            <div className="match-card">
-              <img src={dog.image} alt={dog.name} className="match-image" 
+            <div key={dog._id} className="match-card">
+              <img
+                src={dog.image}
+                alt={dog.name}
+                className="match-image"
                 onError={(e) => {
                   e.target.onerror = null;
                   e.target.src = "/images/default-dog.png";
@@ -280,7 +300,8 @@ useEffect(() => {
               />
 
               <div className="match-info">
-                <button className="chat-button"
+                <button
+                  className="chat-button"
                   onClick={async () => {
                     setCurrChatDog(dog);
                     setShowChatPopup(true);
@@ -302,7 +323,7 @@ useEffect(() => {
                       console.error("error with convo:", err);
                     }
                   }}
-                  >
+                >
                   Open Chat
                 </button>
                 <h2 className="dog-name">{dog.name}</h2>
@@ -311,9 +332,12 @@ useEffect(() => {
                 </p>
 
                 <div className="tag-list">
-                  {dog.tags && dog.tags.map((tag, i) => (
-                    <span key={i} className="dog-tag">{tag}</span>
-                  ))}
+                  {dog.tags &&
+                    dog.tags.map((tag, i) => (
+                      <span key={i} className="dog-tag">
+                        {tag}
+                      </span>
+                    ))}
                 </div>
 
                 <p className="dog-bio">{dog.bio}</p>

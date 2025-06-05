@@ -22,15 +22,23 @@ function ForgotPassword() {
           <h1 className="brand-name">woofers</h1>
         </div>
         <div className="navbar-right">
-          <Link to="/" className="nav-link">Home</Link>
-          <Link to="/about" className="nav-link">About Us</Link>
-          <Link to="/blog" className="nav-link">Blog</Link>
+          <Link to="/" className="nav-link">
+            Home
+          </Link>
+          <Link to="/about" className="nav-link">
+            About Us
+          </Link>
+          <Link to="/blog" className="nav-link">
+            Blog
+          </Link>
         </div>
       </div>
 
       <div className="login-container">
         <h2 className="login-title">Forgot Password</h2>
-        <p className="login-subtitle">Enter your email to receive reset instructions</p>
+        <p className="login-subtitle">
+          Enter your email to receive reset instructions
+        </p>
         {!submitted ? (
           <form className="login-form" onSubmit={handleSubmit}>
             <input
@@ -40,9 +48,13 @@ function ForgotPassword() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
-            <button type="submit" className="login-button">Send Reset Link</button>
+            <button type="submit" className="login-button">
+              Send Reset Link
+            </button>
             <div className="login-links">
-              <Link to="/login" className="signup-link">Back to Login</Link>
+              <Link to="/login" className="signup-link">
+                Back to Login
+              </Link>
             </div>
           </form>
         ) : (
