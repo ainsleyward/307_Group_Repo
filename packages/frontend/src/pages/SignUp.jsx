@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "../styles/Login.css";
+import domain from "../domain";
 
 function SignUp() {
   const navigate = useNavigate();
@@ -48,7 +49,7 @@ function SignUp() {
       };
 
       try {
-        const res = await fetch("http://localhost:8000/signup", {
+        const res = await fetch(`${domain}/signup`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(payload),
