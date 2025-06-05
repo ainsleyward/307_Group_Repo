@@ -5,6 +5,8 @@ import "../styles/Swipe.css";
 import { useParams } from "react-router-dom";
 import domain from "../domain";
 import downIcon from "../assets/down-icon.png";
+import Sidebar from "../components/Sidebar";
+import "../styles/Dashboard.css";
 
 console.log(domain);
 
@@ -66,6 +68,7 @@ function Swipe() {
   const [showCornerPopup, setShowCornerPopup] = useState(false);
   const [showMatchModal, setShowMatchModal] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
+  const [matchedDog, setMatchedDog] = useState(null);
 
   useEffect(() => {
     fetch(`${domain}/dogs`)
@@ -117,6 +120,7 @@ function Swipe() {
       .then((data) => {
         console.log("Match:", data);
         if (data.isMutualMatch) {
+          setMatchedDog(targetDog);
           setShowMatchModal(true);
         } else {
           setShowCornerPopup(true);
@@ -153,8 +157,9 @@ function Swipe() {
   }
 
   return (
+  <div className="page-layout">
+    <Sidebar userId={userId} />
     <div className="swipe-container">
-      <h1 className="title">Woofer</h1>
       {userDogs.length > 1 && currentDog && (
                 <div className="dog-switcher" onClick={() => setShowDropdown(!showDropdown)}>
                   <span className="chevron"><img src={downIcon} alt="⌄" /></span>
@@ -184,28 +189,28 @@ function Swipe() {
 
       {showMatchModal && (
         <div className="match-popup" onClick={() => setShowMatchModal(false)}>
-          <div className="match-popup-info">It's a Match!</div>
+          <div className="match-popup-info">
+            <p>IT'S A MATCH!!</p>
+            <img src={matchedDog.image} alt={matchedDog.name} className="match-image" />
+            <p className="match-text">You matched with <strong>{matchedDog.name}</strong>!</p>
+          </div>
         </div>
       )}
 
       <div className="three-columns-grid">
         <div className="button-column">
-          <button onClick={next} className="icon-button">
-            {XIcon} 
-          </button>
+          <button onClick={next} className="icon-button">{XIcon}</button>
         </div>
-        <div>
+      <div className="swipe-card">
           <h2 className="swipe-h2">{dogOnPage.name}</h2>
-          <p>
-            <strong>Breed:</strong> {dogOnPage.breed}
-          </p>
+          <h2 className="swipe-breed">{dogOnPage.breed}</h2>
           <img src={dogOnPage.image} alt={dogOnPage.name} className="swipe-image" 
             onError={(e) => {
               e.target.onerror = null;
               e.target.src = "/images/default-dog.png";
             }}
           />
-          <p>{dogOnPage.bio}</p>
+          <p className="swipe-bio">{dogOnPage.bio}</p>
         </div>
         <div className="button-column">
           <button
@@ -217,6 +222,7 @@ function Swipe() {
         </div>
       </div>
     </div>
+  </div>
   );
 }
 
