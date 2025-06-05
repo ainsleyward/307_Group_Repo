@@ -22,6 +22,11 @@ function Matches() {
   const [loading, setLoading] = useState(true);
   const [currentDog, setCurrentDog] = useState(null);
   const [showDropdown, setShowDropdown] = useState(false);
+  const [showChatPopup, setShowChatPopup] = useState(false);
+  const [currChatDog, setCurrChatDog] = useState(null);
+  const [currConvoId, setCurrConvoId] = useState(null);
+  const [messages, setMessages] = useState([]);
+  const [newMessage, setNewMessage] = useState("");
 
   useEffect(() => {
     Promise.all([
@@ -131,6 +136,32 @@ useEffect(() => {
   setMatchedDogs(filtered);
 }, [dogId, matches, allDogs]);
 
+useEffect(() => {
+  if (!dogId) return;
+
+  fetch(`/api/convos?dogId=${dogId}`)
+    .then((res) => res.json())
+    .then((data) => {
+      console.log("Fetched conversations:", data);
+    })
+    .catch((err) => {
+      console.error("error getting convos:", err);
+    });
+}, [dogId]);
+
+useEffect(() => {
+  if (!currConvoId) return;
+
+  fetch(`${domain}/messages?convoId=${currConvoId}`)
+    .then((res) => res.json())
+    .then((data) => {
+      setMessages(data);
+    })
+    .catch((err) => {
+      console.error("error getting messages:", err);
+    });
+}, [currConvoId]);
+
 
   if (!dogId && !loading) {
     return (
@@ -189,7 +220,55 @@ useEffect(() => {
           </div>
         )}
 
-        <h1 className="title">{currentDog ? `Sniff out these matches, ${currentDog.name}!!` : "Matches"}</h1>
+        {showChatPopup && currChatDog && (
+          <div className="chat-popup">
+            <div className="chat-popup-inner">
+              <button className="close-chat" onClick={() => setShowChatPopup(false)}>×</button>
+              <h2 className="chat-header">Chat with {currChatDog.name}</h2>
+              <div className="chat-messages">
+                {messages.map((msg) => {
+                  const sender = msg.participantId === dogId ? currentDog.name : currChatDog.name;
+                  return (
+                    <div key={msg._id} className="chat-message">
+                      <strong>{sender}:</strong> {msg.text}
+                    </div>
+                  );
+                })}
+              </div>
+              <form
+                onSubmit={async (e) => {
+                  e.preventDefault();
+                  try {
+                    const res = await fetch(`${domain}/messages`, {
+                      method: "POST",
+                      headers: { "Content-Type": "application/json" },
+                      body: JSON.stringify({
+                        convoId: currConvoId,
+                        participantId: dogId,
+                        text: newMessage,
+                      }),
+                    });
+                    const saved = await res.json();
+                    setMessages((prev) => [...prev, saved]);
+                    setNewMessage("");
+                  } catch (err) {
+                    console.error("sending message failed:", err);
+                  }
+                }}
+              >
+                <input
+                  type="text"
+                  value={newMessage}
+                  onChange={(e) => setNewMessage(e.target.value)}
+                  placeholder="bark bark bark bark bark..."
+                />
+                <button type="submit">Woof Woof</button>
+              </form>
+            </div>
+          </div>
+        )}
+
+        <h1 className="match-title">{currentDog ? `Sniff out these matches, ${currentDog.name}!!` : "Matches"}</h1>
         <div className="match-list">
           {matchedDogs.map((dog) => (
             <div className="match-card">
@@ -201,6 +280,31 @@ useEffect(() => {
               />
 
               <div className="match-info">
+                <button className="chat-button"
+                  onClick={async () => {
+                    setCurrChatDog(dog);
+                    setShowChatPopup(true);
+
+                    try {
+                      const res = await fetch(`${domain}/convos`, {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({
+                          dogId1: dogId,
+                          dogId2: dog._id,
+                        }),
+                      });
+
+                      const data = await res.json();
+                      console.log("ConvoID:", data.convoId);
+                      setCurrConvoId(data.convoId);
+                    } catch (err) {
+                      console.error("error with convo:", err);
+                    }
+                  }}
+                  >
+                  Open Chat
+                </button>
                 <h2 className="dog-name">{dog.name}</h2>
                 <p className="dog-details">
                   {dog.breed}, Age: {dog.age}, Sex: {dog.gender || "N/A"}

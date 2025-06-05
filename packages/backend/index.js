@@ -6,6 +6,10 @@ import dotenv from "dotenv";
 import mongoose from "mongoose";
 import Dog from "./models/Dog.js";
 import Match from "./models/Match.js";
+import User from "./models/User.js";
+import Convo from "./models/Convo.js";
+import Participant from "./models/Participant.js";
+import Message from "./models/Message.js";
 import dashboardRoutes from "./routes/dashboard.js";
 import cloudinaryConfig from "./cloudinary.js";
 const { cloudinary, upload } = cloudinaryConfig;
@@ -157,6 +161,92 @@ app.delete("/dev/clear-matches", async (req, res) => {
     res.send("all matches deleted");
   } catch (err) {
     res.status(500).send({ error: "error deleting matches" });
+  }
+});
+
+app.get("/convos", async (req, res) => {
+  const { dogId } = req.query;
+  if (!dogId) {
+    return res.status(400).json({ error: "no dogId given" });
+  }
+  try {
+    const participants = await Participant.find({ dogId });
+    const convoIds = participants.map((x) => x.convoId);
+
+    res.status(200).json({ convoIds });
+  } catch (err) {
+    console.error("error fetching convos:", err);
+    res.status(500).json({ error: "server error" });
+  }
+});
+
+app.post("/convos", async (req, res) => {
+  const { dogId1, dogId2 } = req.body;
+  if (!dogId1 || !dogId2) {
+    return res.status(400).json({ error: "either dogId1 or dogId2 not given" });
+  }
+
+  try {
+    const dog1Convos = await Participant.find({ dogId: dogId1 });
+    const dog1ConvoIds = dog1Convos.map((x) => x.convoId);
+    const dog2Convos = await Participant.find({
+      dogId: dogId2,
+      convoId: { $in: dog1ConvoIds },
+    });
+
+    if (dog2Convos.length > 0) {
+      const existingConvoId = dog2Convos[0].convoId;
+      return res.status(200).json({ convoId: existingConvoId });
+    }
+
+    const newConvo = await Convo.create({});
+    await Participant.insertMany([
+      { convoId: newConvo._id, dogId: dogId1 },
+      { convoId: newConvo._id, dogId: dogId2 },
+    ]);
+
+    return res.status(201).json({ convoId: newConvo._id });
+  } catch (err) {
+    console.error("Error in find-or-create:", err);
+    res.status(500).json({ error: "Server error" });
+  }
+});
+
+app.get("/messages", async (req, res) => {
+  const { convoId } = req.query;
+
+  if (!convoId) {
+    return res.status(400).json({ error: "no convoId given" });
+  }
+
+  try {
+    const messages = await Message.find({ convoId }).sort("date");
+    res.json(messages);
+  } catch (err) {
+    console.error("error getting messages:", err);
+    res.status(500).json({ error: "server error" });
+  }
+});
+
+app.post("/messages", async (req, res) => {
+  const { convoId, participantId, text } = req.body;
+
+  if (!convoId || !participantId || !text) {
+    return res.status(400).json({ error: "missing required arg" });
+  }
+
+  try {
+    const message = await Message.create({
+      convoId,
+      participantId,
+      text,
+      date: Date.now(),
+    });
+
+    res.status(201).json(message);
+  } catch (err) {
+    console.error("error posting message:", err);
+    res.status(500).json({ error: "failed to post message" });
   }
 });
 
