@@ -23,3 +23,7 @@ Please follow standard JavaScript coding conventions:
 ## Woofer API
 
 [Lucidchart Diagram](https://lucid.app/lucidchart/e520feb5-0120-464d-a370-7f7286b0e6d3/edit?viewport_loc=88%2C-225%2C441%2C871%2C0_0&invitationId=inv_9651b60a-3364-43ad-929a-471e51b4ee7e)
+
+## Woofer Web Deployment Link
+
+https://icy-island-011633b1e.6.azurestaticapps.net/
