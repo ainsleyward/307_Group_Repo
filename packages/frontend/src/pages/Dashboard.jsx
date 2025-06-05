@@ -63,8 +63,8 @@ function Dashboard() {
             <h1>Welcome back, {data.userName}</h1>
           </div>
           <div className="no-dogs-message">
-            <p>🐾 No dogs added yet. Have your dog join the pack now!</p>
-            <Link to={`/add-dog/${userId}`} className="add-dog-cta">
+            <p>No dogs added yet. Have your dog join the pack now!</p>
+            <Link to={`/`} className="add-dog-cta">
               Add a Dog
             </Link>
           </div>

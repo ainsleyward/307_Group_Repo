@@ -31,11 +31,11 @@ function Home() {
 
   return (
     <div className="home-container">
-      <h1 className="title">Welcome to Woofer!</h1>
+      {/*<h1 className="title">Welcome to Woofer!</h1>
       <p className="subtitle">
         The #1 Social Network for Pups and their People.
       </p>
-      <button className="home-button">Woof Woof</button>
+      <button className="home-button">Woof Woof</button>*/}
 
       <div style={{ paddingTop: "2rem" }}>
         <h2>Add Your Dog</h2>
