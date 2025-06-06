@@ -12,6 +12,7 @@ import Participant from "./models/Participant.js";
 import Message from "./models/Message.js";
 import dashboardRoutes from "./routes/dashboard.js";
 import cloudinaryConfig from "./cloudinary.js";
+import { registerUser, loginUser, authenticateUser } from "./auth.js";
 const { cloudinary, upload } = cloudinaryConfig;
 
 dotenv.config();
@@ -29,29 +30,18 @@ mongoose
   })
   .then(() => console.log("MongoDB connected"))
   .catch((err) => console.error(err));
-/*
-const allowedOrigins = [
-  "https://icy-island-011633b1e.6.azurestaticapps.net",
-  "http://localhost:5173", // for local dev
-];
-
-const corsOptions = {
-  origin: (origin, callback) => {
-    if (!origin || allowedOrigins.includes(origin)) {
-      callback(null, true);
-    } else {
-      callback(new Error("Not allowed by CORS"));
-    }
-  },
-  credentials: false,
-};*/
-//app.use(cors(corsOptions));
 
 app.get("/", (req, res) => {
   res.send("Hello World!");
 });
 
-app.use("/dashboard", dashboardRoutes);
+app.use("/dashboard", authenticateUser, dashboardRoutes);
+
+// Signup
+app.post("/signup", registerUser);
+
+// Login
+app.post("/login", loginUser);
 
 // GET dogs
 app.get("/dogs", (req, res) => {

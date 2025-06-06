@@ -2,16 +2,27 @@
 import express from "express";
 import User from "../models/User.js";
 import Dog from "../models/Dog.js";
+import { authenticateUser } from "../auth.js";
 
 const router = express.Router();
 
-router.get("/:userId", async (req, res) => {
-  const { userId } = req.params;
-  const currentDogId = req.query.dogId;
-
+router.get("/:userId", authenticateUser, async (req, res) => {
   try {
-    const user = await User.findById(userId).populate("dogs");
+    const { userId } = req.params;
+    const currentDogId = req.query.dogId;
+
+    const user = await User.findById(userId);
+
     if (!user) return res.status(404).json({ error: "User not found" });
+
+    if (!user.dogs || user.dogs.length === 0) {
+      return res.status(200).json({
+        userName: user.firstName,
+        currentDog: null,
+        matches: [],
+        noDogs: true,
+      });
+    }
 
     const currentDog = currentDogId
       ? await Dog.findById(currentDogId)
@@ -26,19 +37,18 @@ router.get("/:userId", async (req, res) => {
     }).populate("owner");
 
     const normalize = (str) => str?.toLowerCase().trim();
-    let locationMatches = otherDogs.filter(
-      (dog) => normalize(dog.owner?.city) === normalize(user.city),
-    );
-    locationMatches = locationMatches.sort(() => 0.5 - Math.random());
+    const locationMatches = otherDogs
+      .filter((dog) => normalize(dog.owner?.city) === normalize(user.city))
+      .sort(() => 0.5 - Math.random())
+      .slice(0, 3);
 
-    const matches = locationMatches.slice(0, 3);
-
-    res.json({
+    res.status(200).json({
       userName: user.firstName,
       currentDog,
-      matches,
+      matches: locationMatches,
     });
   } catch (err) {
+    console.error("Dashboard error:", err);
     res.status(500).json({ error: "Server error" });
   }
 });

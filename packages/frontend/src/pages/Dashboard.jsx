@@ -5,6 +5,7 @@ import "../styles/Dashboard.css";
 import Sidebar from "../components/Sidebar";
 import domain from "../domain";
 import DogProfileModal from "../components/DogProfileModal";
+import { Link } from "react-router-dom";
 
 function Dashboard() {
   const { userId } = useParams();
@@ -21,7 +22,11 @@ function Dashboard() {
     let url = `${domain}/dashboard/${userId}`;
     if (dogId) url += `?dogId=${dogId}`;
 
-    fetch(url)
+    fetch(url, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    })
       .then((res) => {
         if (!res.ok) {
           return res.json().then((err) => {
@@ -30,7 +35,11 @@ function Dashboard() {
         }
         return res.json();
       })
-      .then((data) => setData(data))
+      .then((data) => {
+        console.log("Fetched dashboard data:", data);
+        setData(data);
+      })
+
       .catch((err) => setError(err.message));
   }, [userId, dogId]);
 
@@ -40,6 +49,25 @@ function Dashboard() {
         <Sidebar userId={userId} />
         <div className="dashboard-main">
           <p>Loading...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (data.noDogs) {
+    return (
+      <div className="dashboard-container">
+        <Sidebar userId={userId} />
+        <div className="dashboard-main">
+          <div className="dashboard-header">
+            <h1>Welcome back, {data.userName}</h1>
+          </div>
+          <div className="no-dogs-message">
+            <p>No dogs added yet. Have your dog join the pack now!</p>
+            <Link to={`/`} className="add-dog-cta">
+              Add a Dog
+            </Link>
+          </div>
         </div>
       </div>
     );
@@ -120,15 +148,18 @@ function Dashboard() {
                   View profile
                 </button>
               </div>
-              <div className="tags">
-                {match.tags.map((tag, i) => (
-                  <span key={i} className="tag">
-                    {tag}
-                  </span>
-                ))}
+
+              <div className="match-info">
+                <div className="tags">
+                  {match.tags.map((tag, i) => (
+                    <span key={i} className="tag">
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+                <h3>{match.name}</h3>
+                <p className="breed">{match.breed}</p>
               </div>
-              <h3>{match.name}</h3>
-              <p className="breed">{match.breed}</p>
             </div>
           ))}
         </div>

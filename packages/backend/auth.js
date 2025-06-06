@@ -1,27 +1,46 @@
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-
-const creds = [];
+import User from "./models/User.js";
 
 export function registerUser(req, res) {
-  const { username, pwd } = req.body; // from form
+  const { firstName, lastName, email, password } = req.body;
 
-  if (!username || !pwd) {
-    res.status(400).send("Bad request: Invalid input data.");
-  } else if (creds.find((c) => c.username === username)) {
-    res.status(409).send("Username already taken");
-  } else {
+  if (!firstName || !lastName || !email || !password) {
+    return res.status(400).send("Bad request: Invalid input data.");
+  }
+
+  User.findOne({ email }).then((existingUser) => {
+    if (existingUser) {
+      return res.status(409).send("Email already in use");
+    }
+
+    let savedUser;
+
     bcrypt
       .genSalt(10)
-      .then((salt) => bcrypt.hash(pwd, salt))
+      .then((salt) => bcrypt.hash(password, salt))
       .then((hashedPassword) => {
-        generateAccessToken(username).then((token) => {
-          console.log("Token:", token);
-          res.status(201).send({ token: token });
-          creds.push({ username, hashedPassword });
+        const newUser = new User({
+          firstName,
+          lastName,
+          email,
+          password: hashedPassword,
         });
+
+        return newUser.save();
+      })
+      .then((user) => {
+        savedUser = user;
+        return generateAccessToken(user._id);
+      })
+      .then((token) => {
+        res.status(201).send({ token, userId: savedUser._id });
+      })
+      .catch((err) => {
+        console.error("Signup error:", err);
+        res.status(500).send("Error creating user");
       });
-  }
+  });
 }
 
 function generateAccessToken(username) {
@@ -62,27 +81,30 @@ export function authenticateUser(req, res, next) {
 }
 
 export function loginUser(req, res) {
-  const { username, pwd } = req.body; // from form
-  const retrievedUser = creds.find((c) => c.username === username);
+  const { email, password } = req.body;
 
-  if (!retrievedUser) {
-    // invalid username
-    res.status(401).send("Unauthorized");
-  } else {
-    bcrypt
-      .compare(pwd, retrievedUser.hashedPassword)
-      .then((matched) => {
-        if (matched) {
-          generateAccessToken(username).then((token) => {
-            res.status(200).send({ token: token });
+  User.findOne({ email })
+    .then((user) => {
+      if (!user) {
+        return res.status(401).send("Unauthorized");
+      }
+
+      bcrypt
+        .compare(password, user.password)
+        .then((matched) => {
+          if (!matched) {
+            return res.status(401).send("Unauthorized");
+          }
+
+          generateAccessToken(user._id).then((token) => {
+            res.status(200).send({ token, userId: user._id });
           });
-        } else {
-          // invalid password
-          res.status(401).send("Unauthorized");
-        }
-      })
-      .catch(() => {
-        res.status(401).send("Unauthorized");
-      });
-  }
+        })
+        .catch(() => {
+          res.status(500).send("Server error");
+        });
+    })
+    .catch(() => {
+      res.status(500).send("Server error");
+    });
 }

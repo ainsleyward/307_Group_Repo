@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "../styles/CreateUserProfile.css";
+import domain from "../domain";
 
 function CreateUserProfile() {
   const [user, setUser] = useState({
@@ -60,7 +61,7 @@ function CreateUserProfile() {
     uploadFormData.append("image", selectedFile);
 
     try {
-      const uploadResponse = await fetch("http://localhost:8000/upload", {
+      const uploadResponse = await fetch(`${domain}/upload`, {
         method: "POST",
         body: uploadFormData,
       });
@@ -73,7 +74,7 @@ function CreateUserProfile() {
         imgId: publicId,
       };
 
-      const response = await fetch("http://localhost:8000/users", {
+      const response = await fetch(`${domain}/users`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(fullUser),
