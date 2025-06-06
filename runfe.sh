@@ -1,4 +1,4 @@
 #!/bin/bash
 
 cd packages/frontend
-npm run preview
+npm run dev
