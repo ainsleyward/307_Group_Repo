@@ -9,8 +9,6 @@ import downIcon from "../assets/down-icon.png";
 import Sidebar from "../components/Sidebar";
 import "../styles/Dashboard.css";
 
-console.log(domain);
-
 function Matches() {
   const { userId } = useParams();
   console.log("userId from URL:", userId);
@@ -62,9 +60,6 @@ function Matches() {
         const tempId = ownersDogs[0]._id;
 
         for (const match of matches) {
-          //console.log("s:", match.swiperDogId);
-          //console.log("t:", match.targetDogId);
-          //console.log("d:", dogId);
           if (match.swiperDogId === tempId) {
             console.log("+ dogsLiked:", match.targetDogId);
             dogsLiked.add(match.targetDogId);
