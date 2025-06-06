@@ -1,0 +1,67 @@
+
+.edit-form-container {
+  max-width: 600px;
+  margin: 2rem auto;
+  background-color: #ffffff;
+  border-radius: 20px;
+  padding: 2rem;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.edit-form-container h2 {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  color: #4a274f;
+}
+
+.edit-form-container label {
+  display: block;
+  margin-top: 1rem;
+  font-weight: 600;
+  color: #4a274f;
+}
+
+.edit-form-container input[type="text"],
+.edit-form-container input[type="email"],
+.edit-form-container input[type="number"],
+.edit-form-container textarea {
+  width: 100%;
+  padding: 0.6rem;
+  margin-top: 0.25rem;
+  border-radius: 12px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  background-color: #f9f4fb;
+  box-sizing: border-box;
+}
+
+.edit-form-container input:focus,
+.edit-form-container textarea:focus {
+  border-color: #b48aca;
+  outline: none;
+}
+
+.edit-form-container button {
+  background-color: #b48aca;
+  color: white;
+  border: none;
+  padding: 0.75rem;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: bold;
+  margin-top: 1.5rem;
+  cursor: pointer;
+  width: 100%;
+  transition: background-color 0.3s;
+}
+
+.edit-form-container button:hover {
+  background-color: #a16ab5;
+}
+
+.edit-form-container img {
+  border-radius: 12px;
+  margin-top: 1rem;
+}
+

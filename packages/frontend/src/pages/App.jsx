@@ -9,6 +9,9 @@ import Matches from "./Matches";
 import Login from "./Login";
 import SignUp from "./SignUp";
 import ForgotPassword from "./ForgotPassword";
+import DogProfile from "./DogProfile";
+import EditDogProfile from "./EditDogProfile";
+
 
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
@@ -25,6 +28,8 @@ function App() {
         <Route path="/swipe/:userId" element={<Swipe />} />
         <Route path="/profile/create" element={<CreateUserProfile />} />
         <Route path="/matches/:userId" element={<Matches />} />
+        <Route path="/dog/:dogId" element={<DogProfile />} />
+        <Route path="/dog/:dogId/edit" element={<EditDogProfile />} />
       </Routes>
     </Router>
   );

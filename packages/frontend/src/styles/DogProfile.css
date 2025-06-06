@@ -1,0 +1,37 @@
+.dog-profile-container {
+  background-color: #f1e3f3;
+  min-height: 100vh;
+  padding: 2rem;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.dog-profile-card {
+  background-color: white;
+  border-radius: 20px;
+  padding: 2rem;
+  max-width: 600px;
+  margin: auto;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.dog-profile-image {
+  max-width: 100%;
+  border-radius: 20px;
+  margin-bottom: 1rem;
+}
+
+.dog-profile-card button {
+  background-color: #b48aca;
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 12px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+.dog-profile-card button:hover {
+  background-color: #a16ab5;
+}

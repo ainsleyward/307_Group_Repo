@@ -80,7 +80,10 @@ function CreateUserProfile() {
       });
 
       if (!response.ok) throw new Error("Error saving user");
-      console.log("Saved user!", await response.json());
+        const savedUser = await response.json();
+        console.log("Saved user!", savedUser);
+        window.location.href = `/profile/${savedUser._id}`;
+
 
       resetForm();
     } catch (error) {

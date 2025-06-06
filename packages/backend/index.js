@@ -60,6 +60,26 @@ app.get("/dogs", (req, res) => {
     .catch((err) => res.status(500).send(err.message)); // server error
 });
 
+app.get("/users/:id", async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id);
+    if (!user) return res.status(404).json({ error: "User not found" });
+    res.json(user);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+app.get("/dogs/:id", async (req, res) => {
+  try {
+    const dog = await Dog.findById(req.params.id);
+    if (!dog) return res.status(404).json({ error: "Dog not found" });
+    res.json(dog);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 app.post("/upload", upload.single("image"), async (req, res) => {
   try {
     if (!req.file) {
@@ -139,9 +159,8 @@ app.get("/matches", async (req, res) => {
 });
 
 app.post("/users", async (req, res) => {
-  const newUser = new User(req.body);
-
   try {
+    const newUser = new User(req.body);
     const savedUser = await newUser.save();
     res.status(201).json(savedUser);
   } catch (err) {
@@ -247,6 +266,34 @@ app.post("/messages", async (req, res) => {
   } catch (err) {
     console.error("error posting message:", err);
     res.status(500).json({ error: "failed to post message" });
+  }
+});
+
+// Users
+app.put("/users/:id", async (req, res) => {
+  try {
+    const updatedUser = await User.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      { new: true }
+    );
+    res.json(updatedUser);
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+});
+
+// Dogs
+app.put("/dogs/:id", async (req, res) => {
+  try {
+    const updatedDog = await Dog.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      { new: true }
+    );
+    res.json(updatedDog);
+  } catch (err) {
+    res.status(400).json({ error: err.message });
   }
 });
 
