@@ -7,13 +7,13 @@ function EditUserProfile() {
   const { userId } = useParams();
   const navigate = useNavigate();
   const [user, setUser] = useState(null);
-  const [selectedFile, setSelectedFile] = useState(null);
   const [previewUrl, setPreviewUrl] = useState(null);
+  let file = null;
 
   const handleFileSelect = (e) => {
     const file = e.target.files[0];
     if (!file) return;
-    setSelectedFile(file);
+    
     setPreviewUrl(URL.createObjectURL(file));
   };
 
@@ -34,10 +34,12 @@ function EditUserProfile() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    let updatedUser = { ...user };
+
     try {
-      if (selectedFile) {
+      if (file) {
         const uploadFormData = new FormData();
-        uploadFormData.append("image", selectedFile);
+        uploadFormData.append("image", file);
 
         const uploadResponse = await fetch(`${domain}/upload`, {
           method: "POST",
@@ -47,14 +49,15 @@ function EditUserProfile() {
         if (!uploadResponse.ok) throw new Error("Image upload failed");
 
         const { imgUrl, publicId } = await uploadResponse.json();
-        user.image = imgUrl;
-        user.imgId = publicId;
+        publicId; // to appease ESLint gods
+
+        updatedUser.image = imgUrl;
       }
 
       const response = await fetch(`${domain}/users/${userId}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(user),
+        body: JSON.stringify(updatedUser),
       });
 
       if (!response.ok) throw new Error("Failed to update user");
