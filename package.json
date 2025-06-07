@@ -11,7 +11,7 @@
     "dev:backend": "npm start --prefix packages/backend",
     "dev": "concurrently \"npm run dev:backend\" \"npm run dev:frontend\"",
     "lint": "npx eslint . && npx prettier --check .",
-    "test": "echo \"Error: no test specified\" && exit 0"
+    "test": "jest --coverage"
   },
   "author": "Shallot Sniffers",
   "license": "ISC",
@@ -20,11 +20,17 @@
     "@babel/eslint-parser": "^7.27.1",
     "@babel/preset-react": "^7.27.1",
     "@eslint/js": "^9.28.0",
+    "@testing-library/jest-dom": "^6.6.3",
+    "@testing-library/react": "^16.3.0",
     "eslint": "^9.28.0",
     "eslint-plugin-prettier": "^5.4.0",
     "eslint-plugin-react": "^7.37.5",
     "globals": "^16.2.0",
-    "nodemon": "^3.1.9"
+    "identity-obj-proxy": "^3.0.0",
+    "jest": "^29.7.0",
+    "jest-environment-jsdom": "^30.0.0-beta.3",
+    "nodemon": "^3.1.9",
+    "util": "^0.12.5"
   },
   "dependencies": {
     "bcrypt": "^6.0.0",

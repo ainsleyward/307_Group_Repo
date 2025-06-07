@@ -5,6 +5,8 @@ import reactRefresh from "eslint-plugin-react-refresh";
 
 export default [
   { ignores: ["dist"] },
+
+  // Config for all JS/JSX files
   {
     files: ["**/*.{js,jsx}"],
     languageOptions: {
@@ -28,6 +30,23 @@ export default [
         "warn",
         { allowConstantExport: true },
       ],
+    },
+  },
+
+  // Config for Jest files
+  {
+    files: ["frontend_tests/**/*.{js,jsx}"],
+    languageOptions: {
+      ecmaVersion: 2020,
+      globals: {
+        ...globals.browser,
+        ...globals.jest,
+      },
+      parserOptions: {
+        ecmaVersion: "latest",
+        ecmaFeatures: { jsx: true },
+        sourceType: "module",
+      },
     },
   },
 ];
