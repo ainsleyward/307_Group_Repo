@@ -47,8 +47,11 @@ function CreateDogProfile(props) {
         })
         .catch((error) => console.log(error));
 
-      dog.imgId = null;
-      dog.image = null;
+      setDog((prevDog) => ({
+        ...prevDog,
+        image: null,
+        imgId: null,
+      }));
     }
 
     selectedFile = file;
@@ -73,8 +76,11 @@ function CreateDogProfile(props) {
       const { imgUrl, publicId } = await uploadResponse.json();
 
       // update dog
-      dog.image = imgUrl;
-      dog.imgId = publicId;
+      setDog((prevDog) => ({
+        ...prevDog,
+        image: imgUrl,
+        imgId: publicId,
+      }));
     } catch (error) {
       console.error("Error:", error);
     }
@@ -83,13 +89,6 @@ function CreateDogProfile(props) {
   function submitForm() {
     setDog(dog);
     props.handleSubmit(dog);
-    resetForm();
-  }
-
-  function resetForm() {
-    setDog({ name: "", image: "", imgId: null, age: "", breed: "", bio: "" });
-    selectedFile = null;
-    setPreviewUrl(null);
   }
 
   return (
