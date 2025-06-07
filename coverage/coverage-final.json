@@ -1,10 +1,10 @@
 {
-  "/Users/katieslobodsky/Desktop/CSC 307/307_Group_Repo/packages/frontend/src/domain.js": {
-    "path": "/Users/katieslobodsky/Desktop/CSC 307/307_Group_Repo/packages/frontend/src/domain.js",
+  "/Users/juanmr/Projects/CSC307/307_Group_Repo/packages/frontend/src/domain.js": {
+    "path": "/Users/juanmr/Projects/CSC307/307_Group_Repo/packages/frontend/src/domain.js",
     "statementMap": {
       "0": {
-        "start": { "line": 2, "column": 15 },
-        "end": { "line": 2, "column": 38 }
+        "start": { "line": 1, "column": 15 },
+        "end": { "line": 1, "column": 77 }
       }
     },
     "fnMap": {},
@@ -13,10 +13,10 @@
     "f": {},
     "b": {},
     "_coverageSchema": "1a1c01bbd47fc00a2c39e90264f33305004495a9",
-    "hash": "deffb1dcf819486e0d7ed2a87a26ea7ffb75d1c2"
+    "hash": "d1d2b6760ee08851be88b4c6e081dcbd44722b7f"
   },
-  "/Users/katieslobodsky/Desktop/CSC 307/307_Group_Repo/packages/frontend/src/pages/SignUp.jsx": {
-    "path": "/Users/katieslobodsky/Desktop/CSC 307/307_Group_Repo/packages/frontend/src/pages/SignUp.jsx",
+  "/Users/juanmr/Projects/CSC307/307_Group_Repo/packages/frontend/src/pages/SignUp.jsx": {
+    "path": "/Users/juanmr/Projects/CSC307/307_Group_Repo/packages/frontend/src/pages/SignUp.jsx",
     "statementMap": {
       "0": {
         "start": { "line": 7, "column": 19 },
@@ -478,6 +478,6 @@
       "13": [13, 1]
     },
     "_coverageSchema": "1a1c01bbd47fc00a2c39e90264f33305004495a9",
-    "hash": "276382663d444dab67b1294d14421f9935b3a1f7"
+    "hash": "96ba5bec4421da886c1cf43f1516285e156528b2"
   }
 }
