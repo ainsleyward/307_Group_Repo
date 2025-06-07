@@ -19,7 +19,7 @@ function DogProfile() {
 
   return (
     <div className="dog-profile-container">
-      <Sidebar userId={owner} />
+      <Sidebar userId={dogId} />
       <div className="dog-profile-card">
         <img src={dog.image} alt={dog.name} className="dog-profile-image" />
         <h2>{dog.name}</h2>

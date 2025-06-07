@@ -50,16 +50,16 @@ function EditDogProfile() {
         dog.imgId = publicId;
       }
 
-      const response = await fetch(`${domain}/users/${userId}`, {
+      const response = await fetch(`${domain}/dogs/${dogId}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(user),
+        body: JSON.stringify(dog),
       });
 
       if (!response.ok) throw new Error("Failed to update user");
 
       alert("Profile updated successfully!");
-      navigate(`/profile/${userId}`);
+      navigate(`/profile/${dog.owner}`);
     } catch (err) {
       console.error(err);
       alert("An error occurred. Please try again.");
