@@ -69,9 +69,9 @@ function Dashboard() {
           </div>
           <div className="no-dogs-message">
             <p>No dogs added yet. Have your dog join the pack now!</p>
-            <Link to={`/profile/create`} className="add-dog-cta">
-              Create Profile
-            </Link>
+            <Link to={`/${userId}/dog/create`}>
+                <button className="add-dog-button">Add Dog</button>
+              </Link>
           </div>
         </div>
       </div>
