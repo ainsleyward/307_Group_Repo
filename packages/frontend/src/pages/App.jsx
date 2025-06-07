@@ -20,7 +20,6 @@ function App() {
   return (
     <Router>
       <Routes>
-        {/* <Route path="/" element={<Home />} /> */}
         <Route path="/" element={<Homepage />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
@@ -33,6 +32,7 @@ function App() {
         <Route path="/dog/:dogId/edit" element={<EditDogProfile />} />
         <Route path="/profile/:userId" element={<UserProfile />} />
         <Route path="/profile/:userId/edit" element={<EditUserProfile />} />
+        <Route path="/:userId/dog/create/" element={<Home />} />
       </Routes>
     </Router>
   );

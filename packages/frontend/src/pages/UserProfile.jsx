@@ -70,7 +70,7 @@ function UserProfile() {
               <Link to={`/profile/${userId}/edit`}>
                 <button className="edit-button">Edit Profile</button>
               </Link>
-              <Link to={`/`}>
+              <Link to={`${userId}/dog/create/`}>
                 <button className="add-dog-button">Add Dog</button>
               </Link>
             </div>

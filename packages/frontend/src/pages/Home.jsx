@@ -42,8 +42,8 @@ function Home() {
         <h2>Add Your Dog</h2>
         <Form handleSubmit={handleSubmit} />
 
-        <h2>Meet a New Furry Friend:</h2>
-        {/* <div className="dog-list">
+        {/* <h2>Meet a New Furry Friend:</h2>
+        <div className="dog-list">
           {dogs.map((dog, index) => (
             <div key={index} className="dog-card">
               <img src={dog.image} alt={dog.name} className="dog-image" />
