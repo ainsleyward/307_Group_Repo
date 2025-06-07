@@ -13,7 +13,12 @@ function CreateUserProfile() {
     city: "",
     tags: [],
     bio: "",
+    image: "",
+    imgId: "",
   });
+
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [previewUrl, setPreviewUrl] = useState(null);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -37,6 +42,13 @@ function CreateUserProfile() {
     });
   };
 
+  const handleFileSelect = (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    setSelectedFile(file);
+    setPreviewUrl(URL.createObjectURL(file));
+  };
+
   const submitForm = async (e) => {
     e.preventDefault();
 
@@ -45,11 +57,27 @@ function CreateUserProfile() {
       return;
     }
 
+    const uploadFormData = new FormData();
+    uploadFormData.append("image", selectedFile);
+
     try {
+      const uploadResponse = await fetch(`${domain}/upload`, {
+        method: "POST",
+        body: uploadFormData,
+      });
+
+      const { imgUrl, publicId } = await uploadResponse.json();
+
+      const fullUser = {
+        ...user,
+        image: imgUrl,
+        imgId: publicId,
+      };
+
       const response = await fetch(`${domain}/users`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(user),
+        body: JSON.stringify(fullUser),
       });
 
       if (!response.ok) throw new Error("Error saving user");
@@ -74,7 +102,11 @@ function CreateUserProfile() {
       city: "",
       tags: [],
       bio: "",
+      image: "",
+      imgId: "",
     });
+    setSelectedFile(null);
+    setPreviewUrl(null);
   };
 
   return (
@@ -159,6 +191,10 @@ function CreateUserProfile() {
 
       <label>Bio</label>
       <textarea name="bio" value={user.bio} onChange={handleChange} />
+
+      <label>Profile Picture</label>
+      <input type="file" accept="image/*" onChange={handleFileSelect} />
+      {previewUrl && <img src={previewUrl} alt="Preview" width="200" />}
 
       <button type="button" onClick={submitForm}>
         Submit
