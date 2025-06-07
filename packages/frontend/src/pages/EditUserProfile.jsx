@@ -7,6 +7,15 @@ function EditUserProfile() {
   const { userId } = useParams();
   const navigate = useNavigate();
   const [user, setUser] = useState(null);
+  const [previewUrl, setPreviewUrl] = useState(null);
+  let file = null;
+
+  const handleFileSelect = (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    setPreviewUrl(URL.createObjectURL(file));
+  };
 
   useEffect(() => {
     fetch(`${domain}/users/${userId}`)
@@ -25,11 +34,30 @@ function EditUserProfile() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    let updatedUser = { ...user };
+
     try {
+      if (file) {
+        const uploadFormData = new FormData();
+        uploadFormData.append("image", file);
+
+        const uploadResponse = await fetch(`${domain}/upload`, {
+          method: "POST",
+          body: uploadFormData,
+        });
+
+        if (!uploadResponse.ok) throw new Error("Image upload failed");
+
+        const { imgUrl, publicId } = await uploadResponse.json();
+        publicId; // to appease ESLint gods
+
+        updatedUser.image = imgUrl;
+      }
+
       const response = await fetch(`${domain}/users/${userId}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(user),
+        body: JSON.stringify(updatedUser),
       });
 
       if (!response.ok) throw new Error("Failed to update user");
@@ -69,6 +97,10 @@ function EditUserProfile() {
 
         <label>Bio</label>
         <textarea name="bio" value={user.bio} onChange={handleChange} />
+
+        <label>Profile Picture</label>
+        <input type="file" accept="image/*" onChange={handleFileSelect} />
+        {previewUrl && <img src={previewUrl} alt="Preview" width="200" />}
 
         <button type="submit">Save Changes</button>
       </form>
