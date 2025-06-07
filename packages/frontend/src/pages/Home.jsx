@@ -1,5 +1,5 @@
 // src/pages/Home.jsx
-import React, { useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import "../styles/Home.css";
 import Form from "./CreateDogProfile";
@@ -37,12 +37,12 @@ function Home() {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(user),
-      })
-      .then(navigate(`/profile/${dog.owner}`))
-      .catch((error) => {
-        // erase dog if user could not be changed :c (would be work for the future if we had more time)
-        throw error;
-      })
+        })
+          .then(navigate(`/profile/${dog.owner}`))
+          .catch((error) => {
+            // erase dog if user could not be changed :c (would be work for the future if we had more time)
+            throw error;
+          });
       })
       .catch((error) => console.error(error));
   }

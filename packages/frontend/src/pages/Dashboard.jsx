@@ -70,8 +70,8 @@ function Dashboard() {
           <div className="no-dogs-message">
             <p>No dogs added yet. Have your dog join the pack now!</p>
             <Link to={`/${userId}/dog/create`}>
-                <button className="add-dog-button">Add Dog</button>
-              </Link>
+              <button className="add-dog-button">Add Dog</button>
+            </Link>
           </div>
         </div>
       </div>

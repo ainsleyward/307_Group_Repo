@@ -13,7 +13,7 @@ function EditUserProfile() {
   const handleFileSelect = (e) => {
     const file = e.target.files[0];
     if (!file) return;
-    
+
     setPreviewUrl(URL.createObjectURL(file));
   };
 
