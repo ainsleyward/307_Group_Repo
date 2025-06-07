@@ -45,4 +45,26 @@ export default [
       "prettier/prettier": "error",
     },
   },
+  // Frontend tests (Jest)
+  {
+    files: ["packages/frontend/**/*.{test,spec}.{js,jsx}"],
+    languageOptions: {
+      parser: babelParser,
+      parserOptions: {
+        requireConfigFile: false,
+        babelOptions: {
+          presets: ["@babel/preset-react"],
+        },
+      },
+      globals: {
+        ...globals.browser,
+        ...globals.jest,
+      },
+    },
+    plugins: { prettier: pluginPrettier },
+    rules: {
+      ...js.configs.recommended.rules,
+      "prettier/prettier": "error",
+    },
+  },
 ];
