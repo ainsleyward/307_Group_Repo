@@ -5,12 +5,13 @@ import "../styles/Dashboard.css";
 import Sidebar from "../components/Sidebar";
 import domain from "../domain";
 import DogProfileModal from "../components/DogProfileModal";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function Dashboard() {
   const { userId } = useParams();
   const [searchParams] = useSearchParams();
   const dogId = searchParams.get("dogId");
+  const navigate = useNavigate();
 
   const [data, setData] = useState(null);
   const [error, setError] = useState("");
@@ -28,6 +29,11 @@ function Dashboard() {
       },
     })
       .then((res) => {
+        // unauthoritzed entry
+        if (res.status == 401) {
+          navigate("/login");
+        }
+
         if (!res.ok) {
           return res.json().then((err) => {
             throw new Error(err.error);
@@ -39,7 +45,6 @@ function Dashboard() {
         console.log("Fetched dashboard data:", data);
         setData(data);
       })
-
       .catch((err) => setError(err.message));
   }, [userId, dogId]);
 
@@ -174,7 +179,7 @@ function Dashboard() {
           </div>
           <div className="banner-image-container">
             <img
-              src="/src/assets/dashboard-image.jpeg"
+              src="../src/assets/dashboard-image.jpeg"
               alt="Dog group"
               className="cta-image"
             />

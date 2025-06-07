@@ -8,12 +8,6 @@ import downIcon from "../assets/down-icon.png";
 import Sidebar from "../components/Sidebar";
 import "../styles/Dashboard.css";
 
-console.log(domain);
-
-//testing branch
-// npx prettier --write .
-// npx eslint . --fix
-
 const popupTime = 3000;
 
 // icons
