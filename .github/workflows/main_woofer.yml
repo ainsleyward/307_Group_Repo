@@ -33,6 +33,7 @@ jobs:
 
       - name: test
         run: |
+          npm install
           npm run test
 
       - name: Zip artifact for deployment
