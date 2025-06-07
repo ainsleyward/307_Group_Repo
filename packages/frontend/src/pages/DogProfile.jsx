@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
-import "../styles/DogProfile.css"; // Let’s create this next!
+import "../styles/DogProfile.css";
+import Sidebar from "../components/Sidebar";
 
 function DogProfile() {
   const { dogId } = useParams();
@@ -17,6 +18,7 @@ function DogProfile() {
 
   return (
     <div className="dog-profile-container">
+      <Sidebar userId={userId} />
       <div className="dog-profile-card">
         <img src={dog.image} alt={dog.name} className="dog-profile-image" />
         <h2>{dog.name}</h2>

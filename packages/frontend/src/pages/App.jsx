@@ -11,6 +11,9 @@ import SignUp from "./SignUp";
 import ForgotPassword from "./ForgotPassword";
 import DogProfile from "./DogProfile";
 import EditDogProfile from "./EditDogProfile";
+import UserProfile from "./UserProfile";
+import EditUserProfile from "./EditUserProfile";
+
 
 
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
@@ -30,6 +33,8 @@ function App() {
         <Route path="/matches/:userId" element={<Matches />} />
         <Route path="/dog/:dogId" element={<DogProfile />} />
         <Route path="/dog/:dogId/edit" element={<EditDogProfile />} />
+        <Route path="/profile/:userId" element={<UserProfile />} />
+        <Route path="/profile/:userId/edit" element={<EditUserProfile />} />
       </Routes>
     </Router>
   );
