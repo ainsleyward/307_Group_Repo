@@ -297,7 +297,7 @@ function Sidebar({ userId }) {
       </svg>
 
       <Link to={`/profile/${userId}`}>Profile</Link>
-      <Link to="/homepage">Log out</Link>
+      <Link to="/">Log out</Link>
     </div>
   );
 }

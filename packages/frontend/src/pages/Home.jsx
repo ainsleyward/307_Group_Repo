@@ -6,6 +6,7 @@ import domain from "../domain";
 
 function Home() {
   const [dogs, setDogs] = useState([]);
+  dogs;
 
   function handleSubmit(dog) {
     fetch(`${domain}/dogs`, {
@@ -42,7 +43,7 @@ function Home() {
         <Form handleSubmit={handleSubmit} />
 
         <h2>Meet a New Furry Friend:</h2>
-        <div className="dog-list">
+        {/* <div className="dog-list">
           {dogs.map((dog, index) => (
             <div key={index} className="dog-card">
               <img src={dog.image} alt={dog.name} className="dog-image" />
@@ -53,7 +54,7 @@ function Home() {
               <p>{dog.bio}</p>
             </div>
           ))}
-        </div>
+        </div> */}
       </div>
     </div>
   );
