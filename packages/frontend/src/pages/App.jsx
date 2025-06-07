@@ -14,8 +14,6 @@ import EditDogProfile from "./EditDogProfile";
 import UserProfile from "./UserProfile";
 import EditUserProfile from "./EditUserProfile";
 
-
-
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 function App() {

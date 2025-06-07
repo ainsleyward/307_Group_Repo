@@ -3,7 +3,6 @@ import { useParams, useNavigate } from "react-router-dom";
 import "../styles/EditForms.css";
 import domain from "../domain";
 
-
 function EditUserProfile() {
   const { userId } = useParams();
   const navigate = useNavigate();
@@ -18,11 +17,9 @@ function EditUserProfile() {
     setPreviewUrl(URL.createObjectURL(file));
   };
 
-
-
   useEffect(() => {
     fetch(`${domain}/users/${userId}`)
-      .then(res => res.json())
+      .then((res) => res.json())
       .then(setUser)
       .catch(console.error);
   }, [userId]);
@@ -38,64 +35,72 @@ function EditUserProfile() {
     e.preventDefault();
 
     try {
+      if (selectedFile) {
+        const uploadFormData = new FormData();
+        uploadFormData.append("image", selectedFile);
 
-        if (selectedFile) {
-            const uploadFormData = new FormData();
-            uploadFormData.append("image", selectedFile);
-
-            const uploadResponse = await fetch(`${domain}/upload`, {
-                method: "POST",
-                body: uploadFormData
-            });
-
-            if (!uploadResponse.ok) throw new Error("Image upload failed");
-
-            const { imgUrl, publicId } = await uploadResponse.json();
-            user.image = imgUrl;
-            user.imgId = publicId;
-        }
-
-        const response = await fetch(`${domain}/users/${userId}`, {
-            method: "PUT",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(user)
+        const uploadResponse = await fetch(`${domain}/upload`, {
+          method: "POST",
+          body: uploadFormData,
         });
 
-        if (!response.ok) throw new Error("Failed to update user");
+        if (!uploadResponse.ok) throw new Error("Image upload failed");
 
-        alert("Profile updated successfully!");
-        navigate(`/profile/${userId}`);
+        const { imgUrl, publicId } = await uploadResponse.json();
+        user.image = imgUrl;
+        user.imgId = publicId;
+      }
+
+      const response = await fetch(`${domain}/users/${userId}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(user),
+      });
+
+      if (!response.ok) throw new Error("Failed to update user");
+
+      alert("Profile updated successfully!");
+      navigate(`/profile/${userId}`);
     } catch (err) {
-        console.error(err);
-        alert("An error occurred. Please try again.");
+      console.error(err);
+      alert("An error occurred. Please try again.");
     }
-};
+  };
 
   return (
     <div className="edit-form-container">
       <h2>Edit Your Profile</h2>
-        <form onSubmit={handleSubmit}>
-            <label>First Name</label>
-            <input name="firstName" value={user.firstName} onChange={handleChange} />
+      <form onSubmit={handleSubmit}>
+        <label>First Name</label>
+        <input
+          name="firstName"
+          value={user.firstName}
+          onChange={handleChange}
+        />
 
-            <label>Last Name</label>
-            <input name="lastName" value={user.lastName} onChange={handleChange} />
+        <label>Last Name</label>
+        <input name="lastName" value={user.lastName} onChange={handleChange} />
 
-            <label>Email</label>
-            <input name="email" type="email" value={user.email} onChange={handleChange} />
+        <label>Email</label>
+        <input
+          name="email"
+          type="email"
+          value={user.email}
+          onChange={handleChange}
+        />
 
-            <label>City</label>
-            <input name="city" value={user.city} onChange={handleChange} />
+        <label>City</label>
+        <input name="city" value={user.city} onChange={handleChange} />
 
-            <label>Bio</label>
-            <textarea name="bio" value={user.bio} onChange={handleChange} />
+        <label>Bio</label>
+        <textarea name="bio" value={user.bio} onChange={handleChange} />
 
-            <label>Profile Picture</label>
-            <input type="file" accept="image/*" onChange={handleFileSelect} />
-            {previewUrl && <img src={previewUrl} alt="Preview" width="200" />}
+        <label>Profile Picture</label>
+        <input type="file" accept="image/*" onChange={handleFileSelect} />
+        {previewUrl && <img src={previewUrl} alt="Preview" width="200" />}
 
-            <button type="submit">Save Changes</button>
-        </form>
+        <button type="submit">Save Changes</button>
+      </form>
     </div>
   );
 }

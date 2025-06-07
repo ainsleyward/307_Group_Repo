@@ -259,28 +259,22 @@ app.post("/messages", async (req, res) => {
   }
 });
 
-// Users
 app.put("/users/:id", async (req, res) => {
   try {
-    const updatedUser = await User.findByIdAndUpdate(
-      req.params.id,
-      req.body,
-      { new: true }
-    );
+    const updatedUser = await User.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+    });
     res.json(updatedUser);
   } catch (err) {
     res.status(400).json({ error: err.message });
   }
 });
 
-// Dogs
 app.put("/dogs/:id", async (req, res) => {
   try {
-    const updatedDog = await Dog.findByIdAndUpdate(
-      req.params.id,
-      req.body,
-      { new: true }
-    );
+    const updatedDog = await Dog.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+    });
     res.json(updatedDog);
   } catch (err) {
     res.status(400).json({ error: err.message });
