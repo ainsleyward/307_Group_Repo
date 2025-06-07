@@ -2,13 +2,14 @@ import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import "../styles/UserProfile.css"; 
 import Sidebar from "../components/Sidebar";
+import domain from "../domain";
 
 function UserProfile() {
   const { userId } = useParams();
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    fetch(`http://localhost:8000/users/${userId}`)
+    fetch(`${domain}/users/${userId}`)
       .then((res) => res.json())
       .then(setUser)
       .catch(console.error);

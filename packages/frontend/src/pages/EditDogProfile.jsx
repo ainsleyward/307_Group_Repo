@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import domain from "../domain";
 
 function EditDogProfile() {
   const { dogId } = useParams();
@@ -18,7 +19,7 @@ function EditDogProfile() {
 
 
   useEffect(() => {
-    fetch(`http://localhost:8000/dogs/${dogId}`)
+    fetch(`${domain}/dogs/${dogId}`)
       .then(res => res.json())
       .then(setDog)
       .catch(console.error);
@@ -40,7 +41,7 @@ function EditDogProfile() {
             const uploadFormData = new FormData();
             uploadFormData.append("image", selectedFile);
 
-            const uploadResponse = await fetch("http://localhost:8000/upload", {
+            const uploadResponse = await fetch(`${domain}/upload`, {
                 method: "POST",
                 body: uploadFormData
             });
@@ -52,7 +53,7 @@ function EditDogProfile() {
             dog.imgId = publicId;
         }
 
-        const response = await fetch(`http://localhost:8000/users/${userId}`, {
+        const response = await fetch(`${domain}/users/${userId}`, {
             method: "PUT",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(user)

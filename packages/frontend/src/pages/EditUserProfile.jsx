@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import "../styles/EditForms.css";
+import domain from "../domain";
 
 
 function EditUserProfile() {
@@ -20,7 +21,7 @@ function EditUserProfile() {
 
 
   useEffect(() => {
-    fetch(`http://localhost:8000/users/${userId}`)
+    fetch(`${domain}/users/${userId}`)
       .then(res => res.json())
       .then(setUser)
       .catch(console.error);
@@ -42,7 +43,7 @@ function EditUserProfile() {
             const uploadFormData = new FormData();
             uploadFormData.append("image", selectedFile);
 
-            const uploadResponse = await fetch("http://localhost:8000/upload", {
+            const uploadResponse = await fetch(`${domain}/upload`, {
                 method: "POST",
                 body: uploadFormData
             });
@@ -54,7 +55,7 @@ function EditUserProfile() {
             user.imgId = publicId;
         }
 
-        const response = await fetch(`http://localhost:8000/users/${userId}`, {
+        const response = await fetch(`${domain}/users/${userId}`, {
             method: "PUT",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(user)

@@ -2,13 +2,14 @@ import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import "../styles/DogProfile.css";
 import Sidebar from "../components/Sidebar";
+import domain from "../domain";
 
 function DogProfile() {
   const { dogId } = useParams();
   const [dog, setDog] = useState(null);
 
   useEffect(() => {
-    fetch(`http://localhost:8000/dogs/${dogId}`)
+    fetch(`${domain}/dogs/${dogId}`)
       .then(res => res.json())
       .then(setDog)
       .catch(console.error);
