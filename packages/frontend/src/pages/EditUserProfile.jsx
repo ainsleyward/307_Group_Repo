@@ -8,14 +8,6 @@ function EditUserProfile() {
   const navigate = useNavigate();
   const [user, setUser] = useState(null);
   const [previewUrl, setPreviewUrl] = useState(null);
-  let file = null;
-
-  const handleFileSelect = (e) => {
-    const file = e.target.files[0];
-    if (!file) return;
-
-    setPreviewUrl(URL.createObjectURL(file));
-  };
 
   useEffect(() => {
     fetch(`${domain}/users/${userId}`)
@@ -31,33 +23,47 @@ function EditUserProfile() {
     setUser((prevUser) => ({ ...prevUser, [name]: value }));
   };
 
+  const handleFileSelect = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    setPreviewUrl(URL.createObjectURL(file));
+
+    const uploadFormData = new FormData();
+    uploadFormData.append("image", file);
+
+    try {
+      const uploadResponse = await fetch(`${domain}/upload`, {
+        method: "POST",
+        body: uploadFormData,
+      });
+
+      if (!uploadResponse.ok) {
+        const err = await uploadResponse.json();
+        throw new Error(err.error || "Image upload failed");
+      }
+
+      const { imgUrl, publicId } = await uploadResponse.json();
+
+      setUser((prevUser) => ({
+        ...prevUser,
+        image: imgUrl,
+        imgId: publicId, // store if needed later
+      }));
+    } catch (err) {
+      console.error("Image upload failed:", err);
+      alert("Image upload failed. Please try again.");
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    let updatedUser = { ...user };
-
     try {
-      if (file) {
-        const uploadFormData = new FormData();
-        uploadFormData.append("image", file);
-
-        const uploadResponse = await fetch(`${domain}/upload`, {
-          method: "POST",
-          body: uploadFormData,
-        });
-
-        if (!uploadResponse.ok) throw new Error("Image upload failed");
-
-        const { imgUrl, publicId } = await uploadResponse.json();
-        publicId; // to appease ESLint gods
-
-        updatedUser.image = imgUrl;
-      }
-
       const response = await fetch(`${domain}/users/${userId}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(updatedUser),
+        body: JSON.stringify(user),
       });
 
       if (!response.ok) throw new Error("Failed to update user");
