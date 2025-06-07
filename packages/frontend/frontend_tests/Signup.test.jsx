@@ -9,7 +9,7 @@ describe("Signup form", () => {
     render(
       <BrowserRouter>
         <SignUp />
-      </BrowserRouter>
+      </BrowserRouter>,
     );
   }
 
